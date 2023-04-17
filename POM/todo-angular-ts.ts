@@ -14,10 +14,14 @@ export class ToDo {
         await this.newTodo.press('Enter');
     }
 
-    async EditTodo(oldText: string, newText: string, saveMethod: string) {
+    async EditTodo(oldText: string, newText: string, saveMethod: string): Promise<void> {
         // Find some way of separating the locators
-        
         await this.page.getByText(oldText).dblclick();
+
+        // var activeElement: Element | null = document.activeElement;
+
+        // console.log(activeElement);
+
         await this.page.getByRole('listitem').filter({ hasText: oldText }).getByRole('textbox').fill(newText);
 
         switch ( saveMethod) {
@@ -31,6 +35,7 @@ export class ToDo {
                 await this.page.keyboard.press('Escape')
                 break;
             default:
+                console.log("Incorrect argument passed to EditTodo method");
                 await this.page.keyboard.press('Enter');
                 break;
         }
