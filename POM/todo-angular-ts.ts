@@ -44,7 +44,7 @@ export class AngularHomepage {
                 await this.page.keyboard.press('Enter');
                 break;
             case 'escape':
-                await this.page.keyboard.press('Escape')
+                await this.page.keyboard.press('Escape');
                 break;
             default:
                 console.log("Incorrect argument passed to EditTodo method");
@@ -68,47 +68,47 @@ export class AngularHomepage {
 
     async allFilterSelected(): Promise<boolean> {
         if (await this.allFilter.getAttribute('class') === 'selected'){
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     }
 
     async activeFilterSelected(): Promise<boolean> {
         if (await this.activeFilter.getAttribute('class') === 'selected'){
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     }
 
     async completedFilterSelected(): Promise<boolean> {
         if (await this.completedFilter.getAttribute('class') === 'selected'){
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     }
 
     async checkTodoPresentByText(text: string): Promise<boolean>{
         try {
             let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({timeout:3000});
-            return true
+            return true;
         } catch (error) {
-            return false
+            return false;
         }
     }
 
     async filterByButton(filter: string): Promise<void>{
         switch (filter) {
             case 'all':
-                await this.allFilter.click()
+                await this.allFilter.click();
                 break;
             case 'active':
-                await this.activeFilter.click()
+                await this.activeFilter.click();
                 break;
             case 'completed':
-                await this.completedFilter.click()
+                await this.completedFilter.click();
                 break;
         }
     }
