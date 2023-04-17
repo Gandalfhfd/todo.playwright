@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 
-export class ToDo {
+export class AngularHomepage {
     private readonly page: Page;
     private readonly newTodo: Locator;
     private readonly entrybox: Locator;
