@@ -7,5 +7,9 @@ test.beforeEach(async ({ page }) => {
 
 test('Create new todo', async ({ page }) => {
     const toDo = new ToDo(page);
-    await toDo.AddNewTodo("Lorem");
+    let lorem: string = "Lorem";
+
+    await toDo.AddNewTodo(lorem);
+    await toDo.AddNewTodo('Lorel');
+    await toDo.EditTodo(lorem, 'Ipsum', 'escape');
 })
