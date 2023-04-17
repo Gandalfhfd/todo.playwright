@@ -3,10 +3,22 @@ import { Locator, Page } from '@playwright/test';
 export class ToDo {
     private readonly page: Page;
     private readonly newTodo: Locator;
+    private readonly entrybox: Locator;
+    private readonly checkbox: Locator;
+    private readonly clearCompletedButton: Locator;
+    private readonly allFilter: Locator;
+    private readonly activeFilter: Locator;
+    private readonly completedFilter: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.newTodo = page.locator('input[ng-model="newTodo"]');
+        this.entrybox = page.getByPlaceholder('What needs to be done?');
+        this.checkbox = page.locator('div').getByRole('checkbox');
+        this.clearCompletedButton = page.getByRole('button', { name: 'Clear completed' });
+        this.allFilter = page.getByRole('link', { name: 'All' });
+        this.activeFilter = page.getByRole('link', { name: 'Active' });
+        this.completedFilter = page.getByRole('link', { name: 'Completed' });
     }
 
     async AddNewTodo(text: string) {
@@ -41,6 +53,66 @@ export class ToDo {
         }
     }
 
+        async addOneTodo(text: string): Promise<void> {
+        await this.entrybox.type(text);
+        await this.entrybox.press('Enter');
+    } 
+
+    async markAsCompletedByText(text: string): Promise<void> {
+        await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
+    } 
+
+    async clearCompleted(): Promise<void> {
+        await this.clearCompletedButton.click();
+    }
+
+    async allFilterSelected(): Promise<boolean> {
+        if (await this.allFilter.getAttribute('class') === 'selected'){
+            return true
+        } else {
+            return false
+        }
+    }
+
+    async activeFilterSelected(): Promise<boolean> {
+        if (await this.activeFilter.getAttribute('class') === 'selected'){
+            return true
+        } else {
+            return false
+        }
+    }
+
+    async completedFilterSelected(): Promise<boolean> {
+        if (await this.completedFilter.getAttribute('class') === 'selected'){
+            return true
+        } else {
+            return false
+        }
+    }
+
+    async checkTodoPresentByText(text: string): Promise<boolean>{
+        try {
+            let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({timeout:3000});
+            return true
+        } catch (error) {
+            return false
+        }
+    }
+
+    async filterByButton(filter: string): Promise<void>{
+        switch (filter) {
+            case 'all':
+                await this.allFilter.click()
+                break;
+            case 'active':
+                await this.activeFilter.click()
+                break;
+            case 'completed':
+                await this.completedFilter.click()
+                break;
+        }
+    }
+    
     // Capture value of nth item
 
 }
