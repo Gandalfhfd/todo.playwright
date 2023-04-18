@@ -40,7 +40,7 @@ export class AngularHomepage {
                 await this.page.keyboard.press('Enter');
                 break;
             case 'escape':
-                await this.page.keyboard.press('Escape')
+                await this.page.keyboard.press('Escape');
                 break;
             default:
                 console.log("Incorrect argument passed to EditTodo method");
@@ -58,9 +58,15 @@ export class AngularHomepage {
         await this.entrybox.press('Enter');
     }
 
+    /// Marks the todo containing the specified text as completed, checking it has succeeded.
     async markAsCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
     }
+
+    /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
+    async toggleCompletedByText(text: string): Promise<void> {
+        await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
+    } 
 
     async clearCompleted(): Promise<void> {
         await this.clearCompletedButton.click();
@@ -137,14 +143,24 @@ export class AngularHomepage {
     async filterByButton(filter: string): Promise<void> {
         switch (filter) {
             case 'all':
-                await this.allFilter.click()
+                await this.allFilter.click();
                 break;
             case 'active':
-                await this.activeFilter.click()
+                await this.activeFilter.click();
                 break;
             case 'completed':
-                await this.completedFilter.click()
+                await this.completedFilter.click();
                 break;
+        }
+    }
+
+    // Returns true if the todo matching the specified text is completed, and false otherwise.
+    async checkTodoCompletedByText(text: string): Promise<boolean>{
+        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+        if (state === 'ng-scope completed') {
+            return true
+        } else {
+            return false
         }
     }
 }

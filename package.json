@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.32.3"
+  },
+  "dependencies": {
+    "playwright": "^1.32.3"
   }
 }
