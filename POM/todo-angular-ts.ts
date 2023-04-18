@@ -66,7 +66,7 @@ export class AngularHomepage {
     /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
     async toggleCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
-    } 
+    }
 
     async clearCompleted(): Promise<void> {
         await this.clearCompletedButton.click();
@@ -155,9 +155,19 @@ export class AngularHomepage {
     }
 
     // Returns true if the todo matching the specified text is completed, and false otherwise.
-    async checkTodoCompletedByText(text: string): Promise<boolean>{
+    async checkTodoCompletedByText(text: string): Promise<boolean> {
         let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
-        if (state === 'ng-scope completed') {
+        if (state.includes('completed')) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    // Returns true if the todo matching the specified text is being edited, and false otherwise.
+    async checkTodoBeingEditedByText(text: string): Promise<boolean> {
+        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+        if (state.includes('editing')) {
             return true
         } else {
             return false
