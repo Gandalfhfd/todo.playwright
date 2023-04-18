@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
-import {AngularHomepage} from '../POM/todo-angular-ts';
+import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
 test('Clear one todo', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await expect(page.locator('body')).toHaveScreenshot('TodoBody.png');
     await angularHomepage.addOneTodo("Example");
     await angularHomepage.markAsCompletedByText("Example");
@@ -15,7 +15,7 @@ test('Clear one todo', async ({ page }) => {
 })
 
 test('Clear multiple todos', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await expect(page.locator('body')).toHaveScreenshot('TodoBodyOneActive.png');
     await angularHomepage.addOneTodo("Example2");
