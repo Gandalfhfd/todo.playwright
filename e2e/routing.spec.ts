@@ -107,3 +107,15 @@ test('Update completed todo state when filtering by completed', async ({ page })
     await angularHomepage.toggleCompletedByText("Example1");
     expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(false);
 })
+
+test('Check active filter persists on reload', async ({ page }) => {
+    const angularHomepage : AngularHomepage = new AngularHomepage(page)
+    await angularHomepage.addOneTodo("Example1");
+    await angularHomepage.addOneTodo("Example2");
+    await angularHomepage.markAsCompletedByText("Example2");
+    await angularHomepage.filterByButton("active");
+    page.reload();
+    expect(await angularHomepage.activeFilterSelected()).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByText("Example2")).toBe(false);
+})
