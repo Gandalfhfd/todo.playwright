@@ -71,3 +71,39 @@ test('Changing route to completed with button', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(false);
     expect(await angularHomepage.checkTodoPresentByText("Example2")).toBe(true);
 })
+
+test('Update active todo state when filtering by all', async ({ page }) => {
+    const angularHomepage : AngularHomepage = new AngularHomepage(page)
+    await angularHomepage.addOneTodo("Example1");
+    await angularHomepage.filterByButton("all");
+    await angularHomepage.markAsCompletedByText("Example1");
+    expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(true);
+    expect(await angularHomepage.checkTodoCompletedByText("Example1")).toBe(true);
+})
+
+test('Update active todo state when filtering by active', async ({ page }) => {
+    const angularHomepage : AngularHomepage = new AngularHomepage(page)
+    await angularHomepage.addOneTodo("Example1");
+    await angularHomepage.filterByButton("active");
+    await angularHomepage.toggleCompletedByText("Example1");
+    expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(false);
+})
+
+test('Update completed todo state when filtering by all', async ({ page }) => {
+    const angularHomepage : AngularHomepage = new AngularHomepage(page)
+    await angularHomepage.addOneTodo("Example1");
+    await angularHomepage.markAsCompletedByText("Example1");
+    await angularHomepage.filterByButton("all");
+    await angularHomepage.toggleCompletedByText("Example1");
+    expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(true);
+    expect(await angularHomepage.checkTodoCompletedByText("Example1")).toBe(false);
+})
+
+test('Update completed todo state when filtering by completed', async ({ page }) => {
+    const angularHomepage : AngularHomepage = new AngularHomepage(page)
+    await angularHomepage.addOneTodo("Example1");
+    await angularHomepage.markAsCompletedByText("Example1");
+    await angularHomepage.filterByButton("completed");
+    await angularHomepage.toggleCompletedByText("Example1");
+    expect(await angularHomepage.checkTodoPresentByText("Example1")).toBe(false);
+})

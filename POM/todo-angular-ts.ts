@@ -58,8 +58,14 @@ export class AngularHomepage {
         await this.entrybox.press('Enter');
     } 
 
+    /// Marks the todo containing the specified text as completed, checking it has succeeded.
     async markAsCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
+    } 
+
+    /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
+    async toggleCompletedByText(text: string): Promise<void> {
+        await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
     } 
 
     async clearCompleted(): Promise<void> {
@@ -99,6 +105,7 @@ export class AngularHomepage {
         }
     }
 
+    /// Click the specified filter button
     async filterByButton(filter: string): Promise<void>{
         switch (filter) {
             case 'all':
@@ -113,6 +120,13 @@ export class AngularHomepage {
         }
     }
     
-    // Capture value of nth item
-
+    /// Returns true if the todo matching the specified text is completed, and false otherwise.
+    async checkTodoCompletedByText(text: string): Promise<boolean>{
+        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+        if (state === 'ng-scope completed') {
+            return true
+        } else {
+            return false
+        }
+    }
 }
