@@ -27,8 +27,7 @@ export class AngularHomepage {
     }
 
     async EditTodo(oldText: string, newText: string, saveMethod: string): Promise<void> {
-        // Enter edit mode.
-        await this.page.getByText(oldText).dblclick();
+        await this.EnterEditMode(oldText);
 
         await this.page.getByRole('listitem').filter({ hasText: oldText }).getByRole('textbox').fill(newText);
 
@@ -99,6 +98,24 @@ export class AngularHomepage {
     async checkTodoPresentByText(text: string): Promise<boolean> {
         try {
             let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
+
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async checkTodoPresentByTextExact(text: string): Promise<boolean> {
+        // Create regex to match the text exactly
+        const regexText = new RegExp(`^${text}$`);
+
+        console.log(regexText);
+
+        try {
+            let test = await this.page.getByRole('listitem').filter({ hasText: "Ipsu" }).innerText({ timeout: 3000 });
+            console.log(test);
+            let _ = await this.page.getByRole('listitem').filter({ hasText: regexText }).innerText({ timeout: 3000 });
+
             return true;
         } catch (error) {
             return false;

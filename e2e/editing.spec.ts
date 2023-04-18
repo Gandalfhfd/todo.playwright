@@ -97,3 +97,16 @@ test("Enable editing inputs", async ({ page }) => {
     // Check the input box is focussed.
     await expect(inputBox).toBeFocused({ timeout: 3000 });
 })
+
+test("Remove leading spaces on save", async ({ page }) => {
+    const angularHomepage = new AngularHomepage(page);
+
+    let oldText: string = "Lorem";
+    let newTextWithWhitespace: string = "   Ipsum";
+    let newTextWithoutWhitespace: string = "Ipsum";
+
+    await angularHomepage.AddNewTodo(oldText);
+    await angularHomepage.EditTodo(oldText, newTextWithWhitespace, 'blur');
+
+    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithoutWhitespace)).toBe(true);
+})
