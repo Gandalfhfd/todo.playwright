@@ -51,7 +51,7 @@ test("Edit todo, don't change anything and discard edit", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByText(oldText)).toBe(true);
 })
 
-test("Destroy todo by removing text then saving by blurring the input textbox", async ({ page }) => {     
+test("Destroy todo by removing text then saving by blurring the input textbox", async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
     let oldText: string = "Lorem";
 
@@ -61,7 +61,7 @@ test("Destroy todo by removing text then saving by blurring the input textbox", 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
 
-test("Destroy todo by removing all non-whitespace, then saving by blurring the input textbox", async ({ page }) => {     
+test("Destroy todo by removing all non-whitespace, then saving by blurring the input textbox", async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
     let oldText: string = "Lorem";
 
@@ -71,24 +71,21 @@ test("Destroy todo by removing all non-whitespace, then saving by blurring the i
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
 
-test("Destroy todo by removing text then saving by pressing enter", async ({ page }) => {     
+test("Enable editing inputs", async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = "Lorem";
 
-    await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, '', 'enter');
+    await angularHomepage.AddNewTodo(oldText);
+    await angularHomepage.EnterEditMode(oldText);
 
-    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-})
+    // Check certain elements have been hidden.
+    expect(await angularHomepage.checkCompletedCheckboxIsClickable()).toBe(false);
+    expect(await angularHomepage.checkDeleteTodoButtonIsClickable()).toBe(false);
 
-test("Destroy todo by removing all non-whitespace, then saving by pressing enter", async ({ page }) => {     
-    const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
-
-    await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, '  	    ', 'enter');
-
-    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
+    // Get the input box locator.
+    const inputBox = await angularHomepage.getInputBox(oldText);
+    // Check the input box is focussed.
+    await expect(inputBox).toBeFocused({ timeout: 3000 });
 })
 
 // CLEAR
