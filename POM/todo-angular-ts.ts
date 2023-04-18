@@ -99,6 +99,15 @@ export class AngularHomepage {
         }
     }
 
+    async checkTodoNotPresentByText(text: string): Promise<boolean>{
+        try {
+            let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({timeout:3000});
+            return false
+        } catch (error) {
+            return true
+        }
+    }
+
     async filterByButton(filter: string): Promise<void>{
         switch (filter) {
             case 'all':

@@ -7,53 +7,61 @@ test.beforeEach(async ({ page }) => {
 
 test('Edit todo and save using blur', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = 'Lorem';
+    let newText: string = 'Ipsum'
 
-    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.AddNewTodo(oldText);
     // Exit the input box by blurring it.
-    await angularHomepage.EditTodo(text, 'Ipsum', 'blur');
+    await angularHomepage.EditTodo(oldText, newText, 'blur');
 
-    expect(await angularHomepage.checkTodoPresentByText('Ipsum'));
+    expect(await angularHomepage.checkTodoPresentByText(newText)).toBe(true);
 })
 
 test('Edit todo and save using enter', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = "Lorem";
+    let newText: string = 'Ipsum'
 
-    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.AddNewTodo(oldText);
     // Exit the input box by pressing the enter key.
-    await angularHomepage.EditTodo(text, 'Ipsum', 'enter');
+    await angularHomepage.EditTodo(oldText, newText, 'enter');
 
-    expect(await angularHomepage.checkTodoPresentByText('Ipsum'));
+    expect(await angularHomepage.checkTodoPresentByText(newText)).toBe(true);
 })
 
 test('Edit todo and discard changes', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = "Lorem";
+    let newText: string = 'Ipsum'
 
-    await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, 'Ipsum', 'escape');
+    await angularHomepage.AddNewTodo(oldText);
+    await angularHomepage.EditTodo(oldText, newText, 'escape');
 
-    expect(await angularHomepage.checkTodoPresentByText('egrfhtg'));
+    expect(await angularHomepage.checkTodoPresentByText(oldText)).toBe(true);
 })
 
 test("Edit todo, don't change anything and discard edit", async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = "Lorem";
+    let newText: string = 'Ipsum'
 
-    await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, 'Ipsum', 'escape');
+    await angularHomepage.AddNewTodo(oldText);
+    await angularHomepage.EditTodo(oldText, newText, 'escape');
 
-    expect(await angularHomepage.checkTodoPresentByText(text));
+    expect(await angularHomepage.checkTodoPresentByText(oldText)).toBe(true);
 })
 
 test("Destroy todo by removing text then saving by blurring the input textbox", async ({ page }) => {     
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = "Lorem";
 
-    await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, '', 'blur');
+    await angularHomepage.AddNewTodo(oldText);
+    await angularHomepage.EditTodo(oldText, '', 'blur');
+
+    expect(await angularHomepage.checkTodoPresentByText(oldText)).toBe(false);
 })
+
+// ADD EXPECTS
 
 test("Destroy todo by removing all non-whitespace, then saving by blurring the input textbox", async ({ page }) => {     
     const angularHomepage = new AngularHomepage(page);
