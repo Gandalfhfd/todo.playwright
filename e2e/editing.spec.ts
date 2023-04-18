@@ -1,56 +1,88 @@
 import { test, expect } from '@playwright/test';
-import {AngularHomepage} from '../POM/todo-angular-ts';
+import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
 test('Edit todo and save using blur', async ({ page }) => {
-    const toDo = new AngularHomepage(page);
-    let text: string = "Lorem";    
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
 
-    await toDo.AddNewTodo(text);
-    await toDo.EditTodo(text, 'Ipsum', 'blur');
+    await angularHomepage.AddNewTodo(text);
+    // Exit the input box by blurring it.
+    await angularHomepage.EditTodo(text, 'Ipsum', 'blur');
 
-    const angularHomepage : AngularHomepage = new AngularHomepage(page)
     expect(await angularHomepage.checkTodoPresentByText('Ipsum'));
 })
 
 test('Edit todo and save using enter', async ({ page }) => {
-    const toDo = new AngularHomepage(page);
-    let text: string = "Lorem";    
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
 
-    await toDo.AddNewTodo(text);
-    await toDo.EditTodo(text, 'Ipsum', 'enter');
+    await angularHomepage.AddNewTodo(text);
+    // Exit the input box by pressing the enter key.
+    await angularHomepage.EditTodo(text, 'Ipsum', 'enter');
 
-    const angularHomepage : AngularHomepage = new AngularHomepage(page)
     expect(await angularHomepage.checkTodoPresentByText('Ipsum'));
 })
 
 test('Edit todo and discard changes', async ({ page }) => {
-    const toDo = new AngularHomepage(page);
-    let text: string = "Lorem";    
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
 
-    await toDo.AddNewTodo(text);
-    await toDo.EditTodo(text, 'Ipsum', 'blur');
+    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.EditTodo(text, 'Ipsum', 'escape');
 
-    const angularHomepage : AngularHomepage = new AngularHomepage(page)
-    expect(await angularHomepage.checkTodoPresentByText('text'));
+    expect(await angularHomepage.checkTodoPresentByText('egrfhtg'));
 })
 
 test("Edit todo, don't change anything and discard edit", async ({ page }) => {
-    const toDo = new AngularHomepage(page);
-    let text: string = "Lorem";    
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
 
-    await toDo.AddNewTodo(text);
-    await toDo.EditTodo(text, 'text', 'escape');
+    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.EditTodo(text, 'Ipsum', 'escape');
 
-    const angularHomepage : AngularHomepage = new AngularHomepage(page)
-    expect(await angularHomepage.checkTodoPresentByText('text'));
+    expect(await angularHomepage.checkTodoPresentByText(text));
 })
 
+test("Destroy todo by removing text then saving by blurring the input textbox", async ({ page }) => {     
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
+
+    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.EditTodo(text, '', 'blur');
+})
+
+test("Destroy todo by removing all non-whitespace, then saving by blurring the input textbox", async ({ page }) => {     
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
+
+    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.EditTodo(text, '  	    ', 'blur');
+})
+
+test("Destroy todo by removing text then saving by pressing escape", async ({ page }) => {     
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
+
+    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.EditTodo(text, '', 'escape');
+})
+
+test("Destroy todo by removing all non-whitespace, then saving by pressing escape", async ({ page }) => {     
+    const angularHomepage = new AngularHomepage(page);
+    let text: string = "Lorem";
+
+    await angularHomepage.AddNewTodo(text);
+    await angularHomepage.EditTodo(text, '  	    ', 'escape');
+})
+
+// CLEAR
+
 test('Clear one todo', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await expect(page.locator('body')).toHaveScreenshot('TodoBody.png');
     await angularHomepage.addOneTodo("Example");
     await angularHomepage.markAsCompletedByText("Example");
@@ -59,7 +91,7 @@ test('Clear one todo', async ({ page }) => {
 })
 
 test('Clear multiple todos', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await expect(page.locator('body')).toHaveScreenshot('TodoBodyOneActive.png');
     await angularHomepage.addOneTodo("Example2");
@@ -70,8 +102,10 @@ test('Clear multiple todos', async ({ page }) => {
     await expect(page.locator('body')).toHaveScreenshot('TodoBodyOneActive.png');
 })
 
+// ROUTING
+
 test('Changing route to all in URL', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await angularHomepage.addOneTodo("Example2");
     await angularHomepage.markAsCompletedByText("Example2");
@@ -83,7 +117,7 @@ test('Changing route to all in URL', async ({ page }) => {
 })
 
 test('Changing route to active in URL', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await angularHomepage.addOneTodo("Example2");
     await angularHomepage.markAsCompletedByText("Example2");
@@ -94,7 +128,7 @@ test('Changing route to active in URL', async ({ page }) => {
 })
 
 test('Changing route to completed in URL', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await angularHomepage.addOneTodo("Example2");
     await angularHomepage.markAsCompletedByText("Example2");
@@ -105,7 +139,7 @@ test('Changing route to completed in URL', async ({ page }) => {
 })
 
 test('Changing route to all with button', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await angularHomepage.addOneTodo("Example2");
     await angularHomepage.markAsCompletedByText("Example2");
@@ -116,7 +150,7 @@ test('Changing route to all with button', async ({ page }) => {
 })
 
 test('Changing route to active with button', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await angularHomepage.addOneTodo("Example2");
     await angularHomepage.markAsCompletedByText("Example2");
@@ -127,7 +161,7 @@ test('Changing route to active with button', async ({ page }) => {
 })
 
 test('Changing route to completed with button', async ({ page }) => {
-    const angularHomepage : AngularHomepage = new AngularHomepage(page);
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addOneTodo("Example1");
     await angularHomepage.addOneTodo("Example2");
     await angularHomepage.markAsCompletedByText("Example2");

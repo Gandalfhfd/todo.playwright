@@ -112,7 +112,4 @@ export class AngularHomepage {
                 break;
         }
     }
-    
-    // Capture value of nth item
-
 }
