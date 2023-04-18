@@ -20,9 +20,6 @@ test('Mark all five todos as complete', async ({ page }) => {
     await angularHomepage.markAsCompletedByText("Example2");
     await angularHomepage.markAsCompletedByText("Example4");
     await angularHomepage.markAllAsCompleted();
-    expect(await angularHomepage.checkTodoCompletedByText("Example1")).toBe(true);
-    expect(await angularHomepage.checkTodoCompletedByText("Example2")).toBe(true);
-    expect(await angularHomepage.checkTodoCompletedByText("Example3")).toBe(true);
-    expect(await angularHomepage.checkTodoCompletedByText("Example4")).toBe(true);
-    expect(await angularHomepage.checkTodoCompletedByText("Example5")).toBe(true);
+    let todoTextArray: string[] = new Array("Example1", "Example2", "Example3", "Example4", "Example5");
+    expect(await angularHomepage.checkMulitpleTodosCompletedByText(todoTextArray)).toBe(true);
 })

@@ -77,6 +77,10 @@ export class AngularHomepage {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
     }
 
+    async markAllAsCompleted(): Promise<void> {
+        await this.markAllAsCompleteButton.click();
+    }
+
     async clearCompleted(): Promise<void> {
         await this.clearCompletedButton.click();
     }
@@ -173,7 +177,16 @@ export class AngularHomepage {
         }
     }
 
-    async markAllAsCompleted(): Promise<void> {
-        await this.markAllAsCompleteButton.click();
+    // Returns true if the todo matching the specified text is completed, and false otherwise.
+    async checkMulitpleTodosCompletedByText(textList: string[]): Promise<boolean> {
+        for (const text of textList) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+            if (state.includes('completed')) {
+                continue
+            } else {
+                return false
+            }
+        }
+        return true
     }
 }
