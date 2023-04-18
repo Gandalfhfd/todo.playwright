@@ -58,33 +58,37 @@ test("Destroy todo by removing text then saving by blurring the input textbox", 
     await angularHomepage.AddNewTodo(oldText);
     await angularHomepage.EditTodo(oldText, '', 'blur');
 
-    expect(await angularHomepage.checkTodoPresentByText(oldText)).toBe(false);
+    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
-
-// ADD EXPECTS
 
 test("Destroy todo by removing all non-whitespace, then saving by blurring the input textbox", async ({ page }) => {     
     const angularHomepage = new AngularHomepage(page);
-    let text: string = "Lorem";
+    let oldText: string = "Lorem";
 
-    await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, '  	    ', 'blur');
+    await angularHomepage.AddNewTodo(oldText);
+    await angularHomepage.EditTodo(oldText, '  	    ', 'blur');
+
+    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
 
-test("Destroy todo by removing text then saving by pressing escape", async ({ page }) => {     
+test("Destroy todo by removing text then saving by pressing enter", async ({ page }) => {     
     const angularHomepage = new AngularHomepage(page);
     let text: string = "Lorem";
 
     await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, '', 'escape');
+    await angularHomepage.EditTodo(text, '', 'enter');
+
+    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
 
-test("Destroy todo by removing all non-whitespace, then saving by pressing escape", async ({ page }) => {     
+test("Destroy todo by removing all non-whitespace, then saving by pressing enter", async ({ page }) => {     
     const angularHomepage = new AngularHomepage(page);
     let text: string = "Lorem";
 
     await angularHomepage.AddNewTodo(text);
-    await angularHomepage.EditTodo(text, '  	    ', 'escape');
+    await angularHomepage.EditTodo(text, '  	    ', 'enter');
+
+    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
 
 // CLEAR
