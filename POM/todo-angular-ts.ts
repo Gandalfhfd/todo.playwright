@@ -99,12 +99,14 @@ export class AngularHomepage {
         }
     }
 
-    async checkTodoNotPresentByText(text: string): Promise<boolean>{
+    async checkAnyTodosPresent(): Promise<boolean>{
+        // Return true if any todos exist
+        // Return false if no todos exist
         try {
-            let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({timeout:3000});
-            return false
-        } catch (error) {
+            let _ = await this.page.locator('.view').click({timeout:3000});
             return true
+        } catch (error) {
+            return false
         }
     }
 
