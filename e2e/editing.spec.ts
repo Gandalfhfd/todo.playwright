@@ -19,7 +19,7 @@ test("Editing - saving changes by pressing enter key", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByText(newText)).toBe(true);
 
     // Verify that the editing class has been removed.
-    
+    expect(await angularHomepage.checkPresenceOfClass("editing")).toBe(false);
 })
 
 test("Editing - saving changes by blurring input textbox", async ({ page }) => {
@@ -36,7 +36,7 @@ test("Editing - saving changes by blurring input textbox", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByText(newText)).toBe(true);
 
     // Verify that the editing class has been removed.
-
+    expect(await angularHomepage.checkPresenceOfClass("editing")).toBe(false);
 })
 
 test('Edit todo and discard changes', async ({ page }) => {
