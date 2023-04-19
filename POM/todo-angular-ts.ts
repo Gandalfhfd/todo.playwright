@@ -176,6 +176,20 @@ export class AngularHomepage {
         }
     }
 
+    async deleteTodoByText(text: string): Promise<void> {
+        let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+        await targetTodo.hover();
+        await targetTodo.getByRole('button', { name: '×' }).click();
+    }
+
+    async deleteMultipleTodosByText(textList: string[]): Promise<void> {
+        for (const text of textList) {
+            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+            await targetTodo.hover();
+            await targetTodo.getByRole('button', { name: '×' }).click();
+        }
+    }
+
     async getInputBox(text: string): Promise<Locator> {
         return this.page.getByRole('listitem').filter({ hasText: text }).getByRole('textbox');
     }
