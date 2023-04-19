@@ -9,6 +9,7 @@ export class AngularHomepage {
     private readonly allFilter: Locator;
     private readonly activeFilter: Locator;
     private readonly completedFilter: Locator;
+    private readonly toggleAll: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -19,6 +20,7 @@ export class AngularHomepage {
         this.allFilter = page.getByRole('link', { name: 'All' });
         this.activeFilter = page.getByRole('link', { name: 'Active' });
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
+        this.toggleAll = page.getByText('Mark all as complete');
     }
 
     async AddNewTodo(text: string) {
@@ -58,6 +60,13 @@ export class AngularHomepage {
         await this.entrybox.press('Enter');
     }
 
+    async addMultipleTodos(count: number, baseText: string): Promise<void> {
+        for (let i = 1; i <= count; i++) {
+            await this.entrybox.type(baseText + i);
+            await this.entrybox.press('Enter');
+        }
+    }
+
     /// Marks the todo containing the specified text as completed, checking it has succeeded.
     async markAsCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
@@ -66,7 +75,11 @@ export class AngularHomepage {
     /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
     async toggleCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
-    } 
+    }
+
+    async clickToggleAll(): Promise<void> {
+        await this.toggleAll.click();
+    }
 
     async clearCompleted(): Promise<void> {
         await this.clearCompletedButton.click();
@@ -155,12 +168,39 @@ export class AngularHomepage {
     }
 
     // Returns true if the todo matching the specified text is completed, and false otherwise.
-    async checkTodoCompletedByText(text: string): Promise<boolean>{
+    async checkTodoCompletedByText(text: string): Promise<boolean> {
         let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
-        if (state === 'ng-scope completed') {
-            return true
+        if (state.includes('completed') === true) {
+            return true;
         } else {
-            return false
+            return false;
         }
+    }
+
+    // Returns true if all todos matching the text in the textList are completed, and false otherwise.
+    async checkMultipleTodosCompletedByText(textList: string[]): Promise<boolean> {
+        for (const text of textList) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+            if (state.includes('completed') === false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Returns true if all todos matching the text in the textList are active, and false otherwise.
+    async checkMultipleTodosActiveByText(textList: string[]): Promise<boolean> {
+        for (const text of textList) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+            if (state.includes('completed') === true) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Returns the checked state of the toggle all checkbox
+    async isToggleAllChecked(): Promise<boolean> {
+        return await this.toggleAll.isChecked();
     }
 }
