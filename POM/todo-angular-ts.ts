@@ -71,6 +71,16 @@ export class AngularHomepage {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
     }
 
+    /**
+     * Mark the todo containing the specified text as completed, checking it has succeeded.
+     * @param textList A list of unique todo content strings.
+     */
+    async markMultipleAsCompletedByText(textList: string[]): Promise<void> {
+        for (const text of textList) {
+            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check(); 
+        }
+    }
+
     /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
     async toggleCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
