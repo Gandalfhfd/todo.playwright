@@ -66,12 +66,28 @@ export class AngularHomepage {
         }
     }
 
-    /// Marks the todo containing the specified text as completed, checking it has succeeded.
+    /**
+     * Mark the todo containing the specified text as completed, checking it has succeeded.
+     * @param text Content of unique todo to match.
+     */
     async markAsCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
     }
 
-    /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
+    /**
+     * Mark the todo containing the specified text as completed, checking it has succeeded.
+     * @param textList An array of unique todo content strings.
+     */
+    async markMultipleAsCompletedByText(textList: string[]): Promise<void> {
+        for (const text of textList) {
+            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check(); 
+        }
+    }
+
+    /**
+     * Toggle the completed state of the todo containing the specified text. Performs no checks afterwards.
+     * @param text Content of unique todo to match.
+     */
     async toggleCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
     }
@@ -173,6 +189,20 @@ export class AngularHomepage {
             return true;
         } catch (error) {
             return false;
+        }
+    }
+
+    async deleteTodoByText(text: string): Promise<void> {
+        let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+        await targetTodo.hover();
+        await targetTodo.getByRole('button', { name: '×' }).click();
+    }
+
+    async deleteMultipleTodosByText(textList: string[]): Promise<void> {
+        for (const text of textList) {
+            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+            await targetTodo.hover();
+            await targetTodo.getByRole('button', { name: '×' }).click();
         }
     }
 
