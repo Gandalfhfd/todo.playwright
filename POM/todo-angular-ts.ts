@@ -117,12 +117,10 @@ export class AngularHomepage {
         this.EnterEditMode(text);
 
         // Get text from the edit mode input box.
+        let inputBox = await this.getInputBox(text);
+        let editingModeText: string = await inputBox.inputValue();
 
-        let editingModeText: string = await this.page.locator(".editing").innerText();
-
-        console.log("editingModeText = " + editingModeText);
         return this.checkStringHasBeenTrimmed(editingModeText);
-
     }
 
     async checkStringHasBeenTrimmed(text: string): Promise<boolean> {
