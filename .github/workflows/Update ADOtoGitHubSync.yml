@@ -14,6 +14,6 @@ jobs:
            foreach ($object in $ListObject.RepoList){
             write-host "--------------- Current syncing for repo $($object.TODOIntake4)----------------------------------"
             Set-Location $($env:GITHUB_WORKSPACE)
-             .\SynADOtoGitHub.ps1 -GitHubDestinationPAT ${{ secrets.GITHUBDESTINATIONPAT }} -ADOSourcePAT ${{ secrets.ADOSOURCEPAT }} -AzureRepoName $($object.TODOIntake4)
+             .\SynADOtoGitHub.ps1 -GitHubDestinationPAT ${{ secrets.GITHUBDESTINATIONPAT }} -ADOSourcePAT ${{ secrets.ADOSOURCEPAT }} -AzureRepoName $($object.TODOIntake4) -ADOCloneURL $($object.nfocus.visualstudio.com/DefaultCollection/TODO%20Intake%204/_git/todo.playwright.git)  -GitHubCloneURL  $($object.github.com/Gandalfhfd/todo.playwright.git)
             write-host "---------------------------------------------------------------------------------------------------"
            }
