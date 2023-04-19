@@ -30,10 +30,10 @@ Write-Host "github Dir : $githubDir"
 $destination = $githubDir+"\"+ $AzureRepoName+".git"
 Write-Host "destination: $destination"
 #Please make sure, you remove https from azure-repo-clone-url
-$sourceURL = "https://$($ADOSourcePAT)"+"@"+"$($ADOCloneURL)"
+$sourceURL = "https://$($GitHubDestinationPAT)"+"@"+"$($GitHubCloneURL)"
 write-host "source URL : $sourceURL"
 #Please make sure, you remove https from github-repo-clone-url
-$destURL = "https://" + $($GitHubDestinationPAT) +"@"+"$($GitHubCloneURL)"
+$destURL = "https://" + $($ADOSourcePAT) +"@"+"$($ADOCloneURL)"
 write-host "dest URL : $destURL"
 #Check if the parent directory exists and delete
 if((Test-Path -path $githubDir))
