@@ -181,12 +181,10 @@ export class AngularHomepage {
     async checkMulitpleTodosCompletedByText(textList: string[]): Promise<boolean> {
         for (const text of textList) {
             let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
-            if (state.includes('completed')) {
-                continue
-            } else {
-                return false
+            if (state.includes('completed') === false) {
+                return false;
             }
         }
-        return true
+        return true;
     }
 }
