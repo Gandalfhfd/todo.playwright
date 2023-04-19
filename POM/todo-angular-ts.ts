@@ -98,7 +98,6 @@ export class AngularHomepage {
     async checkTodoPresentByText(text: string): Promise<boolean> {
         try {
             let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
-
             return true;
         } catch (error) {
             return false;
@@ -106,18 +105,31 @@ export class AngularHomepage {
     }
 
     async checkTodoPresentByTextExact(text: string): Promise<boolean> {
-        // Create regex to match the text exactly
-        const regexText = new RegExp(`^${text}$`);
-
-        console.log(regexText);
-
         try {
-            let test = await this.page.getByRole('listitem').filter({ hasText: "Ipsu" }).innerText({ timeout: 3000 });
-            console.log(test);
-            let _ = await this.page.getByRole('listitem').filter({ hasText: regexText }).innerText({ timeout: 3000 });
-
-            return true;
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: "Ipsum" }).innerText({ timeout: 3000 });
+            return this.checkStringHasBeenTrimmed(todoText);
         } catch (error) {
+            return false;
+        }
+    }
+
+    async checkTodoTrimmedInEditMode(text: string): Promise<boolean> {
+        this.EnterEditMode(text);
+
+        // Get text from the edit mode input box.
+
+        let editingModeText: string = await this.page.locator(".editing").innerText();
+
+        console.log("editingModeText = " + editingModeText);
+        return this.checkStringHasBeenTrimmed(editingModeText);
+
+    }
+
+    async checkStringHasBeenTrimmed(text: string): Promise<boolean> {
+        // Check if all whitespace has been removed.
+        if (text === text.trim()) {
+            return true;
+        } else {
             return false;
         }
     }

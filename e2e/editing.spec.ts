@@ -108,5 +108,8 @@ test("Remove leading spaces on save", async ({ page }) => {
     await angularHomepage.AddNewTodo(oldText);
     await angularHomepage.EditTodo(oldText, newTextWithWhitespace, 'blur');
 
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithoutWhitespace)).toBe(true);
+    // Check that the leading whitespace has been removed when not in editing mode.
+    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    // Check that the leading whitespace has been removed when in editing mode.
+    expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
