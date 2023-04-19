@@ -20,7 +20,7 @@ param(
 Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - -'
 Write-Host ' reflect Azure Devops repo changes to GitHub repo'
 Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - - '
-#$AzureRepoName = "TODOIntake4"
+#$AzureRepoName = "todo.playwright"
 #$ADOCloneURL = "nfocus.visualstudio.com/DefaultCollection/TODO%20Intake%204/_git/todo.playwright.git"
 #$GitHubCloneURL = "github.com/Gandalfhfd/todo.playwright.git"
 $stageDir = pwd | Split-Path
