@@ -29,8 +29,7 @@ export class AngularHomepage {
     }
 
     async EditTodo(oldText: string, newText: string, saveMethod: string): Promise<void> {
-        // Enter edit mode.
-        await this.page.getByText(oldText).dblclick();
+        await this.EnterEditMode(oldText);
 
         await this.page.getByRole('listitem').filter({ hasText: oldText }).getByRole('textbox').fill(newText);
 
@@ -118,6 +117,34 @@ export class AngularHomepage {
         }
     }
 
+    async checkTodoPresentByTextExact(text: string): Promise<boolean> {
+        try {
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: "Ipsum" }).innerText({ timeout: 3000 });
+            return this.checkStringHasBeenTrimmed(todoText);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async checkTodoTrimmedInEditMode(text: string): Promise<boolean> {
+        this.EnterEditMode(text);
+
+        // Get text from the edit mode input box.
+        let inputBox = await this.getInputBox(text);
+        let editingModeText: string = await inputBox.inputValue();
+
+        return this.checkStringHasBeenTrimmed(editingModeText);
+    }
+
+    async checkStringHasBeenTrimmed(text: string): Promise<boolean> {
+        // Check if all whitespace has been removed.
+        if (text === text.trim()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async checkAnyTodosPresent(): Promise<boolean> {
         // Return true if any todos exist
         // Return false if no todos exist
@@ -173,6 +200,15 @@ export class AngularHomepage {
         if (state.includes('completed') === true) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    async checkPresenceOfClass(className: string): Promise<boolean> {
+        try {
+            let _ = await this.page.locator("." + className).click({ timeout: 3000 });
+            return true;
+        } catch (error) {
             return false;
         }
     }
