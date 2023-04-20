@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
     const toDo = new AngularHomepage(page);
     let lorem: string = "Lorem";    
 
-    await toDo.AddNewTodo(lorem);
+    await toDo.addNewTodo(lorem);
 });
 
 test('Mark TODO as complete', async ({ page }) => {

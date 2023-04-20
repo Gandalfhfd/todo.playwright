@@ -19,7 +19,7 @@ test('Check footer hidden when no todos from start', async ({ page }) => {
 
 test('Check main and footer after deleting one todo', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addOneTodo("Example");
+    await angularHomepage.addNewTodo("Example");
     await angularHomepage.deleteTodoByText("Example");
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
     expect(await angularHomepage.checkPresenceOfClass("main")).toBe(false);

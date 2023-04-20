@@ -23,13 +23,13 @@ export class AngularHomepage {
         this.toggleAll = page.getByText('Mark all as complete');
     }
 
-    async AddNewTodo(text: string) {
+    async addNewTodo(text: string): Promise<void> {
         await this.newTodo.fill(text);
         await this.newTodo.press('Enter');
     }
 
-    async EditTodo(oldText: string, newText: string, saveMethod: ('blur' | 'enter' | 'escape')): Promise<void> {
-        await this.EnterEditMode(oldText);
+    async editTodo(oldText: string, newText: string, saveMethod: ('blur' | 'enter' | 'escape')): Promise<void> {
+        await this.enterEditMode(oldText);
 
         await this.page.getByRole('listitem').filter({ hasText: oldText }).getByRole('textbox').fill(newText);
 
@@ -48,15 +48,19 @@ export class AngularHomepage {
         }
     }
 
-    async EnterEditMode(oldText: string): Promise<void> {
+    /**
+     * Enter edit mode on the todo containing the specified text.
+     * @param oldText The unique text with which to locate a todo.
+     */
+    async enterEditMode(oldText: string): Promise<void> {
         await this.page.getByText(oldText).dblclick();
     }
 
-    async addOneTodo(text: string): Promise<void> {
-        await this.entrybox.type(text);
-        await this.entrybox.press('Enter');
-    }
-
+    /**
+     * Add a specified number of todos with names of the format baseText followed by a sequence number between 1 and count.
+     * @param count The number of todos to create.
+     * @param baseText The text each todo should contain before its sequence number.
+     */
     async addMultipleTodos(count: number, baseText: string): Promise<void> {
         for (let i = 1; i <= count; i++) {
             await this.entrybox.type(baseText + i);
@@ -66,7 +70,7 @@ export class AngularHomepage {
 
     /**
      * Mark the todo containing the specified text as completed, checking it has succeeded.
-     * @param text Content of unique todo to match.
+     * @param text The unique text with which to locate a todo.
      */
     async markAsCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
@@ -84,16 +88,22 @@ export class AngularHomepage {
 
     /**
      * Toggle the completed state of the todo containing the specified text. Performs no checks afterwards.
-     * @param text Content of unique todo to match.
+     * @param text The unique text with which to locate a todo.
      */
     async toggleCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
     }
 
+    /**
+     * Click the Toggle All checkbox.
+     */
     async clickToggleAll(): Promise<void> {
         await this.toggleAll.click();
     }
 
+    /**
+     * Click the Clear Completed button.
+     */
     async clearCompleted(): Promise<void> {
         await this.clearCompletedButton.click();
     }
@@ -118,7 +128,7 @@ export class AngularHomepage {
 
     /**
      * Check that a todo with the specified text is present on the page.
-     * @param text The text to match to the todo.
+     * @param text The unique text with which to locate a todo.
      * @returns true if a matching todo is found.
      */
     async checkTodoPresentByText(text: string): Promise<boolean> {
@@ -132,7 +142,7 @@ export class AngularHomepage {
 
     /**
      * Check that a todo with strictly the specified text (i.e. no whitespace) is present on the page.
-     * @param text The text to match to the todo.
+     * @param text The unique text with which to locate a todo.
      * @returns true if a matching todo is found.
      */
     async checkTodoPresentByTextExact(text: string): Promise<boolean> {
@@ -145,7 +155,7 @@ export class AngularHomepage {
     }
 
     async checkTodoTrimmedInEditMode(text: string): Promise<boolean> {
-        this.EnterEditMode(text);
+        this.enterEditMode(text);
 
         // Get text from the edit mode input box.
         let inputBox = await this.getInputBox(text);
@@ -163,9 +173,11 @@ export class AngularHomepage {
         return (text === text.trim());
     }
 
+    /**
+     * Checks if there is one or more todo on the page.
+     * @returns true if at least one todo is present.
+     */
     async checkAnyTodosPresent(): Promise<boolean> {
-        // Return true if any todos exist
-        // Return false if no todos exist
         try {
             let _ = await this.page.locator('.view').isEnabled({ timeout: 3000 });
             return true;
@@ -194,12 +206,20 @@ export class AngularHomepage {
         }
     }
 
+    /**
+     * Delete a todo containing the specified text.
+     * @param text The unique text with which to locate a todo.
+     */
     async deleteTodoByText(text: string): Promise<void> {
         let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
         await targetTodo.hover();
         await targetTodo.getByRole('button', { name: '×' }).click();
     }
 
+    /**
+     * Delete all todos matching text in an array.
+     * @param textList An array of unique todo contents.
+     */
     async deleteMultipleTodosByText(textList: string[]): Promise<void> {
         for (const text of textList) {
             let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
@@ -208,6 +228,11 @@ export class AngularHomepage {
         }
     }
 
+    /**
+     * Get the edit mode input box of a todo containing the specified text.
+     * @param text The unique text with which to locate a todo.
+     * @returns a locator for the edit mode input box of the matching todo.
+     */
     async getInputBox(text: string): Promise<Locator> {
         return this.page.getByRole('listitem').filter({ hasText: text }).getByRole('textbox');
     }
