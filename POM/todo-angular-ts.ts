@@ -305,7 +305,11 @@ export class AngularHomepage {
         }
     }
 
-    // Returns true if the todo matching the specified text is being edited, and false otherwise.
+    /**
+     * Use the input text to find a todo. Check whether that todo is being edited.
+     * @param text The text used to match the todo
+     * @returns true if the todo matching the specified text is being edited, and false otherwise
+     */
     async checkTodoBeingEditedByText(text: string): Promise<boolean> {
         let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
         if (state.includes('editing')) {
