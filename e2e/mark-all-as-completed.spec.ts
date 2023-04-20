@@ -23,7 +23,7 @@ test('Mark all five todos as complete', async ({ page }) => {
 
 test('Toggle state of one todo', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addOneTodo("Example");
+    await angularHomepage.addNewTodo("Example");
     await angularHomepage.clickToggleAll();
     expect(await angularHomepage.checkTodoCompletedByText("Example")).toBe(true);
 });
@@ -48,6 +48,6 @@ test('Clear checked state', async ({ page }) => {
     await angularHomepage.addMultipleTodos(3, "Example");
     await angularHomepage.clickToggleAll();
     await angularHomepage.clearCompleted();
-    await angularHomepage.addOneTodo("Example");
+    await angularHomepage.addNewTodo("Example");
     expect(await angularHomepage.isToggleAllChecked()).toBe(false);
 });

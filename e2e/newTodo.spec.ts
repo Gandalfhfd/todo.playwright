@@ -21,7 +21,7 @@ test('Check trim is applied', async ({ page }) => {
 
     for (const data of inputArray)
     {
-        await toDo.AddNewTodo(data);
+        await toDo.addNewTodo(data);
         expect((await (await toDo.getLastItemFromList()).innerText()).toString()).toBe('test');
     }
 });
@@ -34,7 +34,7 @@ test('Creation of todo when todos exist', async ({ page }) => {
 
     for(let i = 0; i < todoNum; i++)
     {
-        await toDo.AddNewTodo(test);
+        await toDo.addNewTodo(test);
     }
     
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
