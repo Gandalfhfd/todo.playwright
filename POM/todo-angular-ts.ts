@@ -98,27 +98,21 @@ export class AngularHomepage {
         await this.clearCompletedButton.click();
     }
 
-    async allFilterSelected(): Promise<boolean> {
-        if (await this.allFilter.getAttribute('class') === 'selected') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async activeFilterSelected(): Promise<boolean> {
-        if (await this.activeFilter.getAttribute('class') === 'selected') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async completedFilterSelected(): Promise<boolean> {
-        if (await this.completedFilter.getAttribute('class') === 'selected') {
-            return true;
-        } else {
-            return false;
+    /**
+     * Check that the specified filter has been applied to the todos.
+     * @param filter The name of the filter to check.
+     * @returns true if the specified filter is selected, false otherwise.
+     */
+    async checkFilterSelected(filter: ('all' | 'active' | 'completed')): Promise<boolean> {
+        switch (filter) {
+            case 'all':
+                return (await this.allFilter.getAttribute('class') === 'selected');
+            case 'active':
+                return (await this.activeFilter.getAttribute('class') === 'selected');
+            case 'completed':
+                return (await this.completedFilter.getAttribute('class') === 'selected');
+            default:
+                throw new Error("Invalid filter passed to checkFilterSelected. Filter must be all, active or completed.");
         }
     }
 
