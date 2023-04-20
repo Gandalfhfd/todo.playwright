@@ -10,6 +10,7 @@ export class AngularHomepage {
     private readonly activeFilter: Locator;
     private readonly completedFilter: Locator;
     private readonly toggleAll: Locator;
+    private readonly listItem: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -21,6 +22,7 @@ export class AngularHomepage {
         this.activeFilter = page.getByRole('link', { name: 'Active' });
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
+        this.listItem = page.locator('body > section > section > ul > li > div > label');
     }
 
     async AddNewTodo(text: string) {
@@ -268,5 +270,43 @@ export class AngularHomepage {
     // Returns the checked state of the toggle all checkbox
     async isToggleAllChecked(): Promise<boolean> {
         return await this.toggleAll.isChecked();
+    }
+
+    // Adds a new todo and checks if it's appended to the todo list
+    async checkTodoAppendedToList(example: string): Promise<boolean> {
+        await this.AddNewTodo(example);      
+        const todoText = await this.listItem.last().textContent();
+
+        if (todoText === example){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Checks if input box is empty
+    async checkInputBoxEmpty(): Promise<boolean>{
+        if(await this.entrybox.inputValue() === ''){
+            return true;
+        }
+        else {
+            return false;
+        }        
+    }
+
+    // Types in the input box
+    async typeInInputBox(example: string) {
+        await this.newTodo.type(example)
+    }
+
+    // Returns locator of the last item from todo list
+    async getLastItemFromList(): Promise<Locator>{
+        return this.listItem.last();
+    }
+
+    // Returns the entry box locator
+    async getEntryBox(): Promise<Locator>{
+        return this.entrybox
     }
 }
