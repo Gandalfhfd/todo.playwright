@@ -44,9 +44,7 @@ export class AngularHomepage {
                 await this.page.keyboard.press('Escape');
                 break;
             default:
-                console.log("Incorrect argument passed to EditTodo method");
-                await this.page.keyboard.press('Enter');
-                break;
+                throw new Error("Incorrect saveMethod passed to EditTodo. saveMethod must be blur, enter or escape.");
         }
     }
 
@@ -221,6 +219,8 @@ export class AngularHomepage {
             case 'completed':
                 await this.completedFilter.click();
                 break;
+            default:
+                throw new Error("Invalid filter passed to filterByButton. Filter must be all, active or completed.");
         }
     }
 
