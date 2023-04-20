@@ -116,6 +116,11 @@ export class AngularHomepage {
         }
     }
 
+    /**
+     * Check that a todo with the specified text is present on the page.
+     * @param text The text to match to the todo.
+     * @returns true if a matching todo is found.
+     */
     async checkTodoPresentByText(text: string): Promise<boolean> {
         try {
             let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
@@ -125,6 +130,11 @@ export class AngularHomepage {
         }
     }
 
+    /**
+     * Check that a todo with strictly the specified text (i.e. no whitespace) is present on the page.
+     * @param text The text to match to the todo.
+     * @returns true if a matching todo is found.
+     */
     async checkTodoPresentByTextExact(text: string): Promise<boolean> {
         try {
             let todoText: string = await this.page.getByRole('listitem').filter({ hasText: "Ipsum" }).innerText({ timeout: 3000 });
@@ -144,13 +154,13 @@ export class AngularHomepage {
         return this.checkStringHasBeenTrimmed(editingModeText);
     }
 
+    /**
+     * Check if the input text has no leading and no trailing whitespace.
+     * @param text The text to check for whitespace.
+     * @returns true if the text has no surrounding whitespace.
+     */
     async checkStringHasBeenTrimmed(text: string): Promise<boolean> {
-        // Check if all whitespace has been removed.
-        if (text === text.trim()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (text === text.trim());
     }
 
     async checkAnyTodosPresent(): Promise<boolean> {
