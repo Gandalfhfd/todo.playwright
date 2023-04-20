@@ -147,7 +147,7 @@ export class AngularHomepage {
      */
     async checkTodoPresentByTextExact(text: string): Promise<boolean> {
         try {
-            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: "Ipsum" }).innerText({ timeout: 3000 });
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
             return this.checkStringHasBeenTrimmed(todoText);
         } catch (error) {
             return false;
