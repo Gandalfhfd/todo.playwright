@@ -15,15 +15,22 @@ test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
 
 test('Check todos are stored with correct keys', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    // let storage = await page.context().storageState({path: "localStorage"});
     await angularHomepage.addNewTodo("Lorem");
-    
-    // Get the overall storage state of the browser.
-    let storageState = await page.context().storageState();
-    // Get the local storage.
-    let localStorage = await storageState.origins[0].localStorage[0];
-    // Find the value which should correspond to the todo we just added.
-    let storedTodo: string = localStorage.value;
-    console.log(storedTodo);
 
+    // Find the value which should correspond to the todo we just added. In JSON format.
+    let storageState = await page.context().storageState();
+    let localStorage = storageState.origins[0].localStorage[0];
+
+    let storedTodo: string = localStorage.value;
+
+    // Convert string to JSON so that the keys can be extracted.
+    let todoJSON = await JSON.parse(storedTodo);
+    // Extract keys from JSON so that we can compare them to what we expect.
+    let keysArray: string[] = Object.keys(todoJSON[0]);
+
+    // We want exactly 2 keys.
+    expect(keysArray.length).toEqual(2);
+
+    expect(keysArray[0]).toEqual("title");
+    expect(keysArray[1]).toEqual("completed");
 })
