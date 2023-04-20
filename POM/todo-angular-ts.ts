@@ -224,16 +224,7 @@ export class AngularHomepage {
         }
     }
 
-    // Returns true if the todo matching the specified text is completed, and false otherwise.
-    async checkTodoCompletedByText(text: string): Promise<boolean> {
-        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
-        if (state.includes('completed') === true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    
     async checkPresenceOfClass(className: string): Promise<boolean> {
         try {
             let _ = await this.page.locator("." + className).click({ timeout: 3000 });
@@ -243,7 +234,25 @@ export class AngularHomepage {
         }
     }
 
-    // Returns true if all todos matching the text in the textList are completed, and false otherwise.
+    /**
+     * Check whether a specified todo is marked as Completed.
+     * @param text The unique text with which to locate a todo.
+     * @returns true if the todo matching the specified text is Completed, and false otherwise.
+     */
+    async checkTodoCompletedByText(text: string): Promise<boolean> {
+        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+        if (state.includes('completed') === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Check whether all todos in an array are marked as Completed.
+     * @param textList An array of unique todo contents.
+     * @returns true if all todos matching the text in the textList are Completed, and false otherwise.
+     */
     async checkMultipleTodosCompletedByText(textList: string[]): Promise<boolean> {
         for (const text of textList) {
             let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
@@ -254,7 +263,11 @@ export class AngularHomepage {
         return true;
     }
 
-    // Returns true if all todos matching the text in the textList are active, and false otherwise.
+    /**
+     * Check whether all todos in an array are marked as Active.
+     * @param textList An array of unique todo contents.
+     * @returns true if all todos matching the text in the textList are Active, and false otherwise.
+     */
     async checkMultipleTodosActiveByText(textList: string[]): Promise<boolean> {
         for (const text of textList) {
             let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
@@ -265,7 +278,10 @@ export class AngularHomepage {
         return true;
     }
 
-    // Returns the checked state of the toggle all checkbox
+    /**
+     * Call the isChecked() method on the toggle all checkbox.
+     * @returns a boolean describing the checked state of the toggle all checkbox.
+     */
     async isToggleAllChecked(): Promise<boolean> {
         return await this.toggleAll.isChecked();
     }
