@@ -34,3 +34,9 @@ test('Check todos are stored with correct keys', async ({ page }) => {
     expect(keysArray[0]).toEqual("title");
     expect(keysArray[1]).toEqual("completed");
 })
+
+test('localStorage', async ({ page }) =>{
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
+    await angularHomepage.addNewTodo('lorem');
+    expect((await page.context().storageState()).origins[0].localStorage[0].name).toContain('todos-angularjs-typescript');
+})
