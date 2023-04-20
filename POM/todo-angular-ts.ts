@@ -355,10 +355,10 @@ export class AngularHomepage {
 
     // Adds a new todo and checks if it's appended to the todo list
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        await this.addNewTodo(example);      
+        await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
 
-        if (todoText === example){
+        if (todoText === example) {
             return true;
         }
         else {
@@ -367,13 +367,13 @@ export class AngularHomepage {
     }
 
     // Checks if input box is empty
-    async checkInputBoxEmpty(): Promise<boolean>{
-        if(await this.entrybox.inputValue() === ''){
+    async checkInputBoxEmpty(): Promise<boolean> {
+        if (await this.entrybox.inputValue() === '') {
             return true;
         }
         else {
             return false;
-        }        
+        }
     }
 
     // Types in the input box
@@ -382,12 +382,12 @@ export class AngularHomepage {
     }
 
     // Returns locator of the last item from todo list
-    async getLastItemFromList(): Promise<Locator>{
+    async getLastItemFromList(): Promise<Locator> {
         return this.listItem.last();
     }
 
     // Returns the entry box locator
-    async getEntryBox(): Promise<Locator>{
+    async getEntryBox(): Promise<Locator> {
         return this.entrybox
     }
 }
