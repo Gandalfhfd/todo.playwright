@@ -61,7 +61,7 @@ test("Edit todo, don't change anything and discard edit", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByText(oldText)).toBe(true);
 })
 
-test("Destroy todo by removing text then saving by pressing the escape button", async ({ page }) => {
+test("Destroy todo by removing text then saving by pressing the enter button", async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
     let oldText: string = "Lorem";
 
@@ -71,7 +71,7 @@ test("Destroy todo by removing text then saving by pressing the escape button", 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
 
-test("Destroy todo by removing all non-whitespace, then saving by pressing the escape button", async ({ page }) => {
+test("Destroy todo by removing all non-whitespace, then saving by pressing the enter button", async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
     let oldText: string = "Lorem";
 
