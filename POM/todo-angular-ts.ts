@@ -357,7 +357,11 @@ export class AngularHomepage {
         return await this.toggleAll.isChecked();
     }
 
-    // Adds a new todo and checks if it's appended to the todo list
+    /**
+     * Adds a new todo and checks if it's appended to the todo list
+     * @param example string that is used to add a new item to todo list
+     * @returns true if the last item added to the list matches example 
+     */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
         await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
@@ -365,14 +369,15 @@ export class AngularHomepage {
         if (todoText === example) {
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
-    // Checks if input box is empty
-    async checkInputBoxEmpty(): Promise<boolean> {
-        if (await this.entrybox.inputValue() === '') {
+    /**
+     * Checks if input box is empty
+     * @returns true if the inputValue inside the input box contains an empty string
+     */
+    async checkInputBoxEmpty(): Promise<boolean>{
+        if(await this.entrybox.inputValue() === ''){
             return true;
         }
         else {
@@ -380,18 +385,25 @@ export class AngularHomepage {
         }
     }
 
-    // Types in the input box
-    async typeInInputBox(example: string) {
+    /**
+     * Types in the input box
+     * @param example string that is being typed into the input box
+     */
+    async typeInInputBox(example: string): Promise<void> {
         await this.newTodo.type(example)
     }
 
-    // Returns locator of the last item from todo list
-    async getLastItemFromList(): Promise<Locator> {
+    /**
+     * @returns locator of the last item from todo list
+     */
+    async getLastItemFromList(): Promise<Locator>{
         return this.listItem.last();
     }
 
-    // Returns the entry box locator
-    async getEntryBox(): Promise<Locator> {
+    /**
+     * @returns the entry box locator 
+     */
+    async getEntryBox(): Promise<Locator>{
         return this.entrybox
     }
 }
