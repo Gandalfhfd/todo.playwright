@@ -28,7 +28,7 @@ export class AngularHomepage {
         await this.newTodo.press('Enter');
     }
 
-    async EditTodo(oldText: string, newText: string, saveMethod: string): Promise<void> {
+    async EditTodo(oldText: string, newText: string, saveMethod: ('blur' | 'enter' | 'escape')): Promise<void> {
         await this.EnterEditMode(oldText);
 
         await this.page.getByRole('listitem').filter({ hasText: oldText }).getByRole('textbox').fill(newText);
@@ -78,7 +78,7 @@ export class AngularHomepage {
      */
     async markMultipleAsCompletedByText(textList: string[]): Promise<void> {
         for (const text of textList) {
-            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check(); 
+            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
         }
     }
 
@@ -208,7 +208,11 @@ export class AngularHomepage {
         return this.page.getByRole('listitem').filter({ hasText: text }).getByRole('textbox');
     }
 
-    async filterByButton(filter: string): Promise<void> {
+    /**
+     * Apply the specified filter to the todos on the page by clicking the matching button.
+     * @param filter The name of the filter to apply.
+     */
+    async filterByButton(filter: ('all' | 'active' | 'completed')): Promise<void> {
         switch (filter) {
             case 'all':
                 await this.allFilter.click();
@@ -220,11 +224,16 @@ export class AngularHomepage {
                 await this.completedFilter.click();
                 break;
             default:
+                //const _exhaustiveCheck: never = filter;
                 throw new Error("Invalid filter passed to filterByButton. Filter must be all, active or completed.");
         }
     }
 
-    
+    /**
+     * Attempt to click on the input class locator, failing after 3s if it is not present.
+     * @param className Name of class to check for, without a leading full stop.
+     * @returns true if the class is present on the page, false otherwise.
+     */
     async checkPresenceOfClass(className: string): Promise<boolean> {
         try {
             let _ = await this.page.locator("." + className).click({ timeout: 3000 });
