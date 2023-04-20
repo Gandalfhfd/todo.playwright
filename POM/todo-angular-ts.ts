@@ -345,7 +345,7 @@ export class AngularHomepage {
 
     // Adds a new todo and checks if it's appended to the todo list
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        await this.AddNewTodo(example);      
+        await this.addNewTodo(example);      
         const todoText = await this.listItem.last().textContent();
 
         if (todoText === example){
