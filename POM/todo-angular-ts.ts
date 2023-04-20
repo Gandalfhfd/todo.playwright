@@ -23,11 +23,21 @@ export class AngularHomepage {
         this.toggleAll = page.getByText('Mark all as complete');
     }
 
+    /**
+     * Create a new todo with the specified text.
+     * @param text The text that the new todo will contain.
+     */
     async addNewTodo(text: string): Promise<void> {
         await this.newTodo.fill(text);
         await this.newTodo.press('Enter');
     }
 
+    /**
+     * Edit a todo matching the given text, changing the text to a new value, before exiting edit mode with the specified method.
+     * @param oldText The unique text with which to locate a todo.
+     * @param newText The text to enter into the todo after clearing the old text.
+     * @param saveMethod The method by which to exit edit mode.
+     */
     async editTodo(oldText: string, newText: string, saveMethod: ('blur' | 'enter' | 'escape')): Promise<void> {
         await this.enterEditMode(oldText);
 
@@ -154,6 +164,11 @@ export class AngularHomepage {
         }
     }
 
+    /**
+     * Enter edit mode for a specified todo and check that the text there has been trimmed.
+     * @param text The unique text with which to locate a todo.
+     * @returns true if the text in edit mode has been trimmed.
+     */
     async checkTodoTrimmedInEditMode(text: string): Promise<boolean> {
         this.enterEditMode(text);
 
@@ -186,6 +201,7 @@ export class AngularHomepage {
         }
     }
 
+    // Refactor
     async checkCompletedCheckboxIsClickable(): Promise<boolean> {
         try {
             let _ = await this.page.locator("[ng-model='todo.completed']").click({ timeout: 3000 });
@@ -195,6 +211,7 @@ export class AngularHomepage {
         }
     }
 
+    // Refactor
     async checkDeleteTodoButtonIsClickable(): Promise<boolean> {
         // Will click delete button if it exists
         // Only works when there is fewer than 2 todos
