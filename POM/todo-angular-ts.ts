@@ -9,6 +9,7 @@ export class AngularHomepage {
     private readonly allFilter: Locator;
     private readonly activeFilter: Locator;
     private readonly completedFilter: Locator;
+    private readonly toggleAll: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -19,6 +20,7 @@ export class AngularHomepage {
         this.allFilter = page.getByRole('link', { name: 'All' });
         this.activeFilter = page.getByRole('link', { name: 'Active' });
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
+        this.toggleAll = page.getByText('Mark all as complete');
     }
 
     async AddNewTodo(text: string) {
@@ -27,8 +29,7 @@ export class AngularHomepage {
     }
 
     async EditTodo(oldText: string, newText: string, saveMethod: string): Promise<void> {
-        // Enter edit mode.
-        await this.page.getByText(oldText).dblclick();
+        await this.EnterEditMode(oldText);
 
         await this.page.getByRole('listitem').filter({ hasText: oldText }).getByRole('textbox').fill(newText);
 
@@ -58,14 +59,41 @@ export class AngularHomepage {
         await this.entrybox.press('Enter');
     }
 
-    /// Marks the todo containing the specified text as completed, checking it has succeeded.
+    async addMultipleTodos(count: number, baseText: string): Promise<void> {
+        for (let i = 1; i <= count; i++) {
+            await this.entrybox.type(baseText + i);
+            await this.entrybox.press('Enter');
+        }
+    }
+
+    /**
+     * Mark the todo containing the specified text as completed, checking it has succeeded.
+     * @param text Content of unique todo to match.
+     */
     async markAsCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
     }
 
-    /// Toggles the completed state of the todo containing the specified text. Performs no checks afterwards.
+    /**
+     * Mark the todo containing the specified text as completed, checking it has succeeded.
+     * @param textList An array of unique todo content strings.
+     */
+    async markMultipleAsCompletedByText(textList: string[]): Promise<void> {
+        for (const text of textList) {
+            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check(); 
+        }
+    }
+
+    /**
+     * Toggle the completed state of the todo containing the specified text. Performs no checks afterwards.
+     * @param text Content of unique todo to match.
+     */
     async toggleCompletedByText(text: string): Promise<void> {
         await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').click();
+    }
+
+    async clickToggleAll(): Promise<void> {
+        await this.toggleAll.click();
     }
 
     async clearCompleted(): Promise<void> {
@@ -105,6 +133,34 @@ export class AngularHomepage {
         }
     }
 
+    async checkTodoPresentByTextExact(text: string): Promise<boolean> {
+        try {
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
+            return this.checkStringHasBeenTrimmed(todoText);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async checkTodoTrimmedInEditMode(text: string): Promise<boolean> {
+        this.EnterEditMode(text);
+
+        // Get text from the edit mode input box.
+        let inputBox = await this.getInputBox(text);
+        let editingModeText: string = await inputBox.inputValue();
+
+        return this.checkStringHasBeenTrimmed(editingModeText);
+    }
+
+    async checkStringHasBeenTrimmed(text: string): Promise<boolean> {
+        // Check if all whitespace has been removed.
+        if (text === text.trim()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async checkAnyTodosPresent(): Promise<boolean> {
         // Return true if any todos exist
         // Return false if no todos exist
@@ -133,6 +189,20 @@ export class AngularHomepage {
             return true;
         } catch (error) {
             return false;
+        }
+    }
+
+    async deleteTodoByText(text: string): Promise<void> {
+        let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+        await targetTodo.hover();
+        await targetTodo.getByRole('button', { name: '×' }).click();
+    }
+
+    async deleteMultipleTodosByText(textList: string[]): Promise<void> {
+        for (const text of textList) {
+            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+            await targetTodo.hover();
+            await targetTodo.getByRole('button', { name: '×' }).click();
         }
     }
 
@@ -170,7 +240,43 @@ export class AngularHomepage {
         if (state.includes('editing')) {
             return true
         } else {
-            return false
+            return false;
         }
+    }
+
+    async checkPresenceOfClass(className: string): Promise<boolean> {
+        try {
+            let _ = await this.page.locator("." + className).click({ timeout: 3000 });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    // Returns true if all todos matching the text in the textList are completed, and false otherwise.
+    async checkMultipleTodosCompletedByText(textList: string[]): Promise<boolean> {
+        for (const text of textList) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+            if (state.includes('completed') === false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Returns true if all todos matching the text in the textList are active, and false otherwise.
+    async checkMultipleTodosActiveByText(textList: string[]): Promise<boolean> {
+        for (const text of textList) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+            if (state.includes('completed') === true) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Returns the checked state of the toggle all checkbox
+    async isToggleAllChecked(): Promise<boolean> {
+        return await this.toggleAll.isChecked();
     }
 }
