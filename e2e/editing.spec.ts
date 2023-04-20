@@ -66,7 +66,7 @@ test("Destroy todo by removing text then saving by pressing the enter button", a
     let oldText: string = "Lorem";
 
     await angularHomepage.addNewTodo(oldText);
-    await angularHomepage.editTodo(oldText, '', 'escape');
+    await angularHomepage.editTodo(oldText, '', 'enter');
 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
@@ -76,7 +76,7 @@ test("Destroy todo by removing all non-whitespace, then saving by pressing the e
     let oldText: string = "Lorem";
 
     await angularHomepage.addNewTodo(oldText);
-    await angularHomepage.editTodo(oldText, '  	    ', 'escape');
+    await angularHomepage.editTodo(oldText, '  	    ', 'enter');
 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
 })
