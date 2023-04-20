@@ -1,0 +1,13 @@
+name: Run GitHub to ADO Sync with PowerShell
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: Check out repo        
+        uses: actions/checkout@v3
+      - run: |
+            ./SyncGithubtoADO.ps1 -GitHubDestinationPAT ${{ secrets.GITHUBDESTINATIONPAT }} -ADOSourcePAT ${{ secrets.ADOSOURCEPAT }}
