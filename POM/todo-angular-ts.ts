@@ -294,8 +294,22 @@ export class AngularHomepage {
      */
     async checkTodoCompletedByText(text: string): Promise<boolean> {
         let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
-        if (state.includes('completed') === true) {
-            return true;
+        if (state.includes('completed')) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    /**
+     * Use the input text to find a todo. Check whether that todo is being edited.
+     * @param text The text used to match the todo
+     * @returns true if the todo matching the specified text is being edited, and false otherwise
+     */
+    async checkTodoBeingEditedByText(text: string): Promise<boolean> {
+        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+        if (state.includes('editing')) {
+            return true
         } else {
             return false;
         }
@@ -345,10 +359,10 @@ export class AngularHomepage {
      * @returns true if the last item added to the list matches example 
      */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        await this.addNewTodo(example);      
+        await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
 
-        if (todoText === example){
+        if (todoText === example) {
             return true;
         }
         return false;
@@ -364,7 +378,7 @@ export class AngularHomepage {
         }
         else {
             return false;
-        }        
+        }
     }
 
     /**
