@@ -1,5 +1,11 @@
 import { Locator, Page } from '@playwright/test';
 
+// Is the format of the browser's localStorage.
+interface localStorage {
+    name: string;
+    value: string;
+}
+
 export class AngularHomepage {
     private readonly page: Page;
     private readonly newTodo: Locator;
@@ -23,6 +29,8 @@ export class AngularHomepage {
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
+
+
     }
 
     /**
@@ -203,26 +211,22 @@ export class AngularHomepage {
         }
     }
 
-    // Refactor
-    async checkCompletedCheckboxIsClickable(): Promise<boolean> {
-        try {
-            let _ = await this.page.locator("[ng-model='todo.completed']").click({ timeout: 3000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
+    /**
+     * Returns the locator of the completed checkbox
+     * Does not work with multiple todos
+     * @returns the locator of the completed checkbox
+     */
+    async returnCompletedCheckboxLocator(): Promise<Locator> {
+        return this.page.locator("[ng-model='todo.completed']");
     }
 
-    // Refactor
-    async checkDeleteTodoButtonIsClickable(): Promise<boolean> {
-        // Will click delete button if it exists
-        // Only works when there is fewer than 2 todos
-        try {
-            let _ = await this.page.locator("[ng-click='vm.removeTodo(todo)']").click({ timeout: 3000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
+    /**
+     * Returns the locator of the delete button
+     * Does not work with multiple todos
+     * @returns the locator of the completed checkbox
+     */
+    async returnDeleteButtonLocator(): Promise<Locator> {
+        return this.page.locator("[ng-click='vm.removeTodo(todo)']");
     }
 
     /**
@@ -405,5 +409,18 @@ export class AngularHomepage {
      */
     async getEntryBox(): Promise<Locator> {
         return this.entrybox
+    }
+
+    /**
+     * Capture localStorage of the browser and return it.
+     * @returns localStorage of the browser. Uses the localStorage interface I created.
+     */
+    async getLocalStorage(): Promise<localStorage> {
+        // Get the storage state of the browser.
+        let storageState = await this.page.context().storageState();
+        // Extract just the local storage and store it as the interface localStorage.
+        let myLocalStorage: localStorage = storageState.origins[0].localStorage[0];
+
+        return myLocalStorage;
     }
 }

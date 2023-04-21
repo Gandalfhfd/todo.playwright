@@ -89,8 +89,8 @@ test("Enable editing inputs", async ({ page }) => {
     await angularHomepage.enterEditMode(oldText);
 
     // Check certain elements have been hidden.
-    expect(await angularHomepage.checkCompletedCheckboxIsClickable()).toBe(false);
-    expect(await angularHomepage.checkDeleteTodoButtonIsClickable()).toBe(false);
+    expect(await angularHomepage.returnCompletedCheckboxLocator()).toBeVisible({ timeout: 3000, visible: false });
+    expect(await angularHomepage.returnDeleteButtonLocator()).toBeVisible({ timeout: 3000, visible: false });
 
     // Get the input box locator.
     const inputBox = await angularHomepage.getInputBox(oldText);
