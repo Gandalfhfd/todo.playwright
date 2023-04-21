@@ -109,7 +109,7 @@ test("Remove leading spaces on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -125,7 +125,7 @@ test("Remove leading tabs on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -141,7 +141,7 @@ test("Remove leading tabs and spaces on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -157,7 +157,7 @@ test("Remove trailing spaces on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -175,7 +175,7 @@ test("Remove trailing tabs on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -191,7 +191,7 @@ test("Remove trailing tabs and spaces on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -207,7 +207,7 @@ test("Remove leading and trailing spaces on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -223,7 +223,7 @@ test("Remove leading and trailing tabs on save", async ({ page }) => {
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })
@@ -239,7 +239,7 @@ test("Remove leading and trailing tabs and spaces on save", async ({ page }) => 
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
     // Check that the leading whitespace has been removed when not in editing mode.
-    expect(await angularHomepage.checkTodoPresentByTextExact(newTextWithWhitespace)).toBe(true);
+    expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
 })

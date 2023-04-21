@@ -156,12 +156,12 @@ export class AngularHomepage {
     }
 
     /**
-     * NEEDS REFACTORING
-     * Check that a todo with strictly the specified text (i.e. no whitespace) is present on the page.
+     * Check that a todo with the specified test, which has neither leading nor
+     * trailing whitespace is present on the page.
      * @param text The unique text with which to locate a todo.
      * @returns true if a matching todo is found.
      */
-    async checkTodoPresentByTextExact(text: string): Promise<boolean> {
+    async checkTodoPresentByTextAndIsTrimmed(text: string): Promise<boolean> {
         try {
             let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
             return this.checkStringHasBeenTrimmed(todoText);
