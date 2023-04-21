@@ -203,26 +203,22 @@ export class AngularHomepage {
         }
     }
 
-    // Refactor
-    async checkCompletedCheckboxIsClickable(): Promise<boolean> {
-        try {
-            let _ = await this.page.locator("[ng-model='todo.completed']").click({ timeout: 3000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
+    /**
+     * Returns the locator of the completed checkbox
+     * Does not work with multiple todos
+     * @returns the locator of the completed checkbox
+     */
+    async returnCompletedCheckboxLocator(): Promise<Locator> {
+        return this.page.locator("[ng-model='todo.completed']");
     }
 
-    // Refactor
-    async checkDeleteTodoButtonIsClickable(): Promise<boolean> {
-        // Will click delete button if it exists
-        // Only works when there is fewer than 2 todos
-        try {
-            let _ = await this.page.locator("[ng-click='vm.removeTodo(todo)']").click({ timeout: 3000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
+    /**
+     * Returns the locator of the delete button
+     * Does not work with multiple todos
+     * @returns the locator of the completed checkbox
+     */
+    async returnDeleteButtonLocator(): Promise<Locator> {
+        return this.page.locator("[ng-click='vm.removeTodo(todo)']");
     }
 
     /**
