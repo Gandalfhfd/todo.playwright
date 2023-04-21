@@ -1,7 +1,7 @@
 name: Run GitHub to ADO Sync with PowerShell
 
 on:
-  workflow_dispatch:
+  push:
   
 jobs:
   build:
