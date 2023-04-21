@@ -29,8 +29,6 @@ export class AngularHomepage {
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
-
-
     }
 
     /**
@@ -92,17 +90,12 @@ export class AngularHomepage {
      * Mark the todo containing the specified text as completed, checking it has succeeded.
      * @param text The unique text with which to locate a todo.
      */
-    async markAsCompletedByText(text: string): Promise<void> {
-        await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
-    }
-
-    /**
-     * Mark the todo containing the specified text as completed, checking it has succeeded.
-     * @param textList An array of unique todo content strings.
-     */
-    async markMultipleAsCompletedByText(textList: string[]): Promise<void> {
-        for (const text of textList) {
-            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
+    async markAsCompletedByText(text: string | string[]): Promise<void> {
+        if (typeof (text) === "string") {
+            text = Array(text);
+        }
+        for (const t of text) {
+            await this.page.getByRole('listitem').filter({ hasText: t }).getByRole('checkbox').check();
         }
     }
 
@@ -147,25 +140,21 @@ export class AngularHomepage {
     }
 
     /**
-     * Check that a todo with the specified text is present on the page.
+     * Locate a todo using text. Looks for a substring.
      * @param text The unique text with which to locate a todo.
-     * @returns true if a matching todo is found.
+     * @returns locator of todo.
      */
-    async checkTodoPresentByText(text: string): Promise<boolean> {
-        try {
-            let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
+    async locateTodoBySubstring(text: string): Promise<Locator> {
+        return this.page.getByRole('listitem').filter({ hasText: text });
     }
 
     /**
-     * Check that a todo with strictly the specified text (i.e. no whitespace) is present on the page.
+     * Check that a todo with the specified text, which has neither leading nor
+     * trailing whitespace is present on the page.
      * @param text The unique text with which to locate a todo.
      * @returns true if a matching todo is found.
      */
-    async checkTodoPresentByTextExact(text: string): Promise<boolean> {
+    async checkTodoPresentByTextAndIsTrimmed(text: string): Promise<boolean> {
         try {
             let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
             return this.checkStringHasBeenTrimmed(todoText);
@@ -230,22 +219,15 @@ export class AngularHomepage {
     }
 
     /**
-     * Delete a todo containing the specified text.
-     * @param text The unique text with which to locate a todo.
+     * Delete all todos matching text.
+     * @param text The unique text with which to locate todos.
      */
-    async deleteTodoByText(text: string): Promise<void> {
-        let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
-        await targetTodo.hover();
-        await targetTodo.getByRole('button', { name: '×' }).click();
-    }
-
-    /**
-     * Delete all todos matching text in an array.
-     * @param textList An array of unique todo contents.
-     */
-    async deleteMultipleTodosByText(textList: string[]): Promise<void> {
-        for (const text of textList) {
-            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+    async deleteTodosByText(text: string | string[]): Promise<void> {
+        if (typeof text === "string") {
+            text = Array(text);
+        }
+        for (const t of text) {
+            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: t });
             await targetTodo.hover();
             await targetTodo.getByRole('button', { name: '×' }).click();
         }
@@ -296,20 +278,6 @@ export class AngularHomepage {
     }
 
     /**
-     * Check whether a specified todo is marked as Completed.
-     * @param text The unique text with which to locate a todo.
-     * @returns true if the todo matching the specified text is Completed, and false otherwise.
-     */
-    async checkTodoCompletedByText(text: string): Promise<boolean> {
-        let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
-        if (state.includes('completed')) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    /**
      * Use the input text to find a todo. Check whether that todo is being edited.
      * @param text The text used to match the todo
      * @returns true if the todo matching the specified text is being edited, and false otherwise
@@ -324,13 +292,16 @@ export class AngularHomepage {
     }
 
     /**
-     * Check whether all todos in an array are marked as Completed.
-     * @param textList An array of unique todo contents.
-     * @returns true if all todos matching the text in the textList are Completed, and false otherwise.
+     * Check whether all matching todos are marked as Completed.
+     * @param text The text used to match the todo.
+     * @returns true if all todos matching the text are Completed, and false otherwise.
      */
-    async checkMultipleTodosCompletedByText(textList: string[]): Promise<boolean> {
-        for (const text of textList) {
-            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+    async checkTodosCompletedByText(text: string | string[]): Promise<boolean> {
+        if (typeof (text) === 'string') {
+            text = Array(text);
+        }
+        for (const t of text) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: t }).getAttribute('class') ?? 'Not Found';
             if (state.includes('completed') === false) {
                 return false;
             }
@@ -340,12 +311,15 @@ export class AngularHomepage {
 
     /**
      * Check whether all todos in an array are marked as Active.
-     * @param textList An array of unique todo contents.
+     * @param text The text used to match the todo.
      * @returns true if all todos matching the text in the textList are Active, and false otherwise.
      */
-    async checkMultipleTodosActiveByText(textList: string[]): Promise<boolean> {
-        for (const text of textList) {
-            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+    async checkTodosActiveByText(text: string | string[]): Promise<boolean> {
+        if (typeof (text) === 'string') {
+            text = Array(text);
+        }
+        for (const t of text) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: t }).getAttribute('class') ?? 'Not Found';
             if (state.includes('completed') === true) {
                 return false;
             }
@@ -369,11 +343,7 @@ export class AngularHomepage {
     async checkTodoAppendedToList(example: string): Promise<boolean> {
         await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
-
-        if (todoText === example) {
-            return true;
-        }
-        return false;
+        return (todoText === example);
     }
 
     /**
@@ -394,7 +364,7 @@ export class AngularHomepage {
      * @param example string that is being typed into the input box
      */
     async typeInInputBox(example: string): Promise<void> {
-        await this.newTodo.type(example)
+        await this.newTodo.type(example);
     }
 
     /**
@@ -408,7 +378,7 @@ export class AngularHomepage {
      * @returns the entry box locator 
      */
     async getEntryBox(): Promise<Locator> {
-        return this.entrybox
+        return this.entrybox;
     }
 
     /**
