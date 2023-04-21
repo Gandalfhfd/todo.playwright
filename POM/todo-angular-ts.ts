@@ -149,7 +149,7 @@ export class AngularHomepage {
     }
 
     /**
-     * Check that a todo with the specified test, which has neither leading nor
+     * Check that a todo with the specified text, which has neither leading nor
      * trailing whitespace is present on the page.
      * @param text The unique text with which to locate a todo.
      * @returns true if a matching todo is found.
