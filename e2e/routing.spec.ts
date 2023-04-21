@@ -107,7 +107,7 @@ test('Check active filter persists on reload', async ({ page }) => {
     await angularHomepage.addMultipleTodos(2, 'Example');
     await angularHomepage.markAsCompletedByText('Example2');
     await angularHomepage.filterByButton('active');
-    page.reload();
+    await page.reload();
     expect(await angularHomepage.checkFilterSelected('active')).toBe(true);
     expect(await angularHomepage.checkTodoPresentByText('Example1')).toBe(true);
     expect(await angularHomepage.checkTodoPresentByText('Example2')).toBe(false);
