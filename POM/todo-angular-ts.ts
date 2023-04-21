@@ -219,7 +219,7 @@ export class AngularHomepage {
     }
 
     /**
-     * Delete all todos matching text in an array.
+     * Delete all todos matching text.
      * @param text The unique text with which to locate todos.
      */
     async deleteTodosByText(text: string | string[]): Promise<void> {
