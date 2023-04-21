@@ -92,17 +92,12 @@ export class AngularHomepage {
      * Mark the todo containing the specified text as completed, checking it has succeeded.
      * @param text The unique text with which to locate a todo.
      */
-    async markAsCompletedByText(text: string): Promise<void> {
-        await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
-    }
-
-    /**
-     * Mark the todo containing the specified text as completed, checking it has succeeded.
-     * @param textList An array of unique todo content strings.
-     */
-    async markMultipleAsCompletedByText(textList: string[]): Promise<void> {
-        for (const text of textList) {
-            await this.page.getByRole('listitem').filter({ hasText: text }).getByRole('checkbox').check();
+    async markAsCompletedByText(text: string | string[]): Promise<void> {
+        if (typeof (text) === "string") {
+            text = Array(text);
+        }
+        for (const t of text) {
+            await this.page.getByRole('listitem').filter({ hasText: t }).getByRole('checkbox').check();
         }
     }
 
@@ -230,9 +225,9 @@ export class AngularHomepage {
      * @param text The unique text with which to locate todos.
      */
     async deleteTodosByText(text: string | string[]): Promise<void> {
-        if (typeof text === "string"){
+        if (typeof text === "string") {
             text = Array(text);
-        } 
+        }
         for (const t of text) {
             let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: t });
             await targetTodo.hover();
@@ -304,7 +299,7 @@ export class AngularHomepage {
      * @returns true if all todos matching the text are Completed, and false otherwise.
      */
     async checkTodosCompletedByText(text: string | string[]): Promise<boolean> {
-        if (typeof(text) === "string") {
+        if (typeof (text) === "string") {
             text = Array(text);
         }
         for (const t of text) {
