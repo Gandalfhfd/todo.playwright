@@ -248,6 +248,21 @@ export class AngularHomepage {
     }
 
     /**
+     * Delete all todos matching text in an array.
+     * @param text The unique text with which to locate todos.
+     */
+    async deleteTodosByText(text: string | string[]): Promise<void> {
+        if (typeof text === "string"){
+            text = Array(text);
+        } 
+        for (const t of text) {
+            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: t });
+            await targetTodo.hover();
+            await targetTodo.getByRole('button', { name: '×' }).click();
+        }
+    }
+
+    /**
      * Get the edit mode input box of a todo containing the specified text.
      * @param text The unique text with which to locate a todo.
      * @returns a locator for the edit mode input box of the matching todo.
