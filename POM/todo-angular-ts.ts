@@ -1,5 +1,11 @@
 import { Locator, Page } from '@playwright/test';
 
+// Is the format of the browser's localStorage.
+interface localStorage {
+    name: string;
+    value: string;
+}
+
 export class AngularHomepage {
     private readonly page: Page;
     private readonly newTodo: Locator;
@@ -23,6 +29,8 @@ export class AngularHomepage {
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
+
+
     }
 
     /**
@@ -372,8 +380,8 @@ export class AngularHomepage {
      * Checks if input box is empty
      * @returns true if the inputValue inside the input box contains an empty string
      */
-    async checkInputBoxEmpty(): Promise<boolean>{
-        if(await this.entrybox.inputValue() === ''){
+    async checkInputBoxEmpty(): Promise<boolean> {
+        if (await this.entrybox.inputValue() === '') {
             return true;
         }
         else {
@@ -392,14 +400,27 @@ export class AngularHomepage {
     /**
      * @returns locator of the last item from todo list
      */
-    async getLastItemFromList(): Promise<Locator>{
+    async getLastItemFromList(): Promise<Locator> {
         return this.listItem.last();
     }
 
     /**
      * @returns the entry box locator 
      */
-    async getEntryBox(): Promise<Locator>{
+    async getEntryBox(): Promise<Locator> {
         return this.entrybox
+    }
+
+    /**
+     * Capture localStorage of the browser and return it.
+     * @returns localStorage of the browser. Uses the localStorage interface I created.
+     */
+    async getLocalStorage(): Promise<localStorage> {
+        // Get the storage state of the browser.
+        let storageState = await this.page.context().storageState();
+        // Extract just the local storage and store it as the interface localStorage.
+        let myLocalStorage: localStorage = storageState.origins[0].localStorage[0];
+
+        return myLocalStorage;
     }
 }
