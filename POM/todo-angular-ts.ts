@@ -147,20 +147,16 @@ export class AngularHomepage {
     }
 
     /**
-     * Check that a todo with the specified text is present on the page.
+     * Locate a todo using text. Looks for a substring.
      * @param text The unique text with which to locate a todo.
-     * @returns true if a matching todo is found.
+     * @returns locator of todo.
      */
-    async checkTodoPresentByText(text: string): Promise<boolean> {
-        try {
-            let _ = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
+    async locateTodoBySubstring(text: string): Promise<Locator> {
+        return this.page.getByRole('listitem').filter({ hasText: text });
     }
 
     /**
+     * NEEDS REFACTORING
      * Check that a todo with strictly the specified text (i.e. no whitespace) is present on the page.
      * @param text The unique text with which to locate a todo.
      * @returns true if a matching todo is found.
