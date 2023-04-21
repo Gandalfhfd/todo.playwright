@@ -29,7 +29,7 @@ test('Check main and footer after deleting one todo', async ({ page }) => {
 test('Check main and footer after deleting two todos', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addMultipleTodos(2, "Example");
-    await angularHomepage.deleteTodosByText(Array("Example1", "Example2"));
+    await angularHomepage.deleteTodosByText(["Example1", "Example2"]);
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
     expect(await angularHomepage.checkPresenceOfClass("main")).toBe(false);
     expect(await angularHomepage.checkPresenceOfClass("footer")).toBe(false);
@@ -38,7 +38,7 @@ test('Check main and footer after deleting two todos', async ({ page }) => {
 test('Check main and footer after deleting five todos', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addMultipleTodos(5, "Example");
-    await angularHomepage.deleteTodosByText(Array("Example1", "Example2", "Example3", "Example4", "Example5"));
+    await angularHomepage.deleteTodosByText(["Example1", "Example2", "Example3", "Example4", "Example5"]);
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
     expect(await angularHomepage.checkPresenceOfClass("main")).toBe(false);
     expect(await angularHomepage.checkPresenceOfClass("footer")).toBe(false);
