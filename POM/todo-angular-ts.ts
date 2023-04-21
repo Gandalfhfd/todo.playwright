@@ -226,22 +226,15 @@ export class AngularHomepage {
     }
 
     /**
-     * Delete a todo containing the specified text.
-     * @param text The unique text with which to locate a todo.
-     */
-    async deleteTodoByText(text: string): Promise<void> {
-        let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
-        await targetTodo.hover();
-        await targetTodo.getByRole('button', { name: '×' }).click();
-    }
-
-    /**
      * Delete all todos matching text in an array.
-     * @param textList An array of unique todo contents.
+     * @param text The unique text with which to locate todos.
      */
-    async deleteMultipleTodosByText(textList: string[]): Promise<void> {
-        for (const text of textList) {
-            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: text });
+    async deleteTodosByText(text: string | string[]): Promise<void> {
+        if (typeof text === "string"){
+            text = Array(text);
+        } 
+        for (const t of text) {
+            let targetTodo: Locator = this.page.getByRole('listitem').filter({ hasText: t });
             await targetTodo.hover();
             await targetTodo.getByRole('button', { name: '×' }).click();
         }
