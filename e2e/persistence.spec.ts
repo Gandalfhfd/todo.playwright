@@ -17,10 +17,13 @@ test('Check todos are stored with correct keys', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addNewTodo("Lorem");
 
-    // Find the value which should correspond to the todo we just added. In JSON format.
-    let storageState = await page.context().storageState();
-    let localStorage = storageState.origins[0].localStorage[0];
+    // Capture the local storage from the browser.
+    let localStorage = await angularHomepage.getLocalStorage();
 
+    console.log(localStorage);
+    console.log(localStorage.value);
+
+    // Find the value which should correspond to the todo we just added. In JSON format.
     let storedTodo: string = localStorage.value;
 
     // Convert string to JSON so that the keys can be extracted.
@@ -35,8 +38,12 @@ test('Check todos are stored with correct keys', async ({ page }) => {
     expect(keysArray[1]).toEqual("completed");
 })
 
-test('localStorage', async ({ page }) =>{
+test('localStorage', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addNewTodo('lorem');
-    expect((await page.context().storageState()).origins[0].localStorage[0].name).toContain('todos-angularjs-typescript');
+    
+    // Capture the local storage from the browser.
+    let localStorage = await angularHomepage.getLocalStorage();
+
+    expect(localStorage.name).toContain('todos-angularjs-typescript');
 })
