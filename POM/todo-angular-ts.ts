@@ -376,8 +376,8 @@ export class AngularHomepage {
      * Checks if input box is empty
      * @returns true if the inputValue inside the input box contains an empty string
      */
-    async checkInputBoxEmpty(): Promise<boolean>{
-        if(await this.entrybox.inputValue() === ''){
+    async checkInputBoxEmpty(): Promise<boolean> {
+        if (await this.entrybox.inputValue() === '') {
             return true;
         }
         else {
@@ -396,14 +396,14 @@ export class AngularHomepage {
     /**
      * @returns locator of the last item from todo list
      */
-    async getLastItemFromList(): Promise<Locator>{
+    async getLastItemFromList(): Promise<Locator> {
         return this.listItem.last();
     }
 
     /**
      * @returns the entry box locator 
      */
-    async getEntryBox(): Promise<Locator>{
+    async getEntryBox(): Promise<Locator> {
         return this.entrybox
     }
 }
