@@ -9,7 +9,7 @@ test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addNewTodo("Example");
     await angularHomepage.enterEditMode("Example");
-    page.reload();
+    await page.reload();
     expect(await angularHomepage.checkTodoBeingEditedByText("Example")).toBe(false);
 })
 
