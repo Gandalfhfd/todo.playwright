@@ -299,7 +299,7 @@ export class AngularHomepage {
      * @returns true if all todos matching the text are Completed, and false otherwise.
      */
     async checkTodosCompletedByText(text: string | string[]): Promise<boolean> {
-        if (typeof (text) === "string") {
+        if (typeof (text) === 'string') {
             text = Array(text);
         }
         for (const t of text) {
@@ -313,12 +313,15 @@ export class AngularHomepage {
 
     /**
      * Check whether all todos in an array are marked as Active.
-     * @param textList An array of unique todo contents.
+     * @param text The text used to match the todo.
      * @returns true if all todos matching the text in the textList are Active, and false otherwise.
      */
-    async checkMultipleTodosActiveByText(textList: string[]): Promise<boolean> {
-        for (const text of textList) {
-            let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
+    async checkTodosActiveByText(text: string | string[]): Promise<boolean> {
+        if (typeof (text) === 'string') {
+            text = Array(text);
+        }
+        for (const t of text) {
+            let state: string = await this.page.getByRole('listitem').filter({ hasText: t }).getAttribute('class') ?? 'Not Found';
             if (state.includes('completed') === true) {
                 return false;
             }

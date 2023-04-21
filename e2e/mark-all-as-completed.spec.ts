@@ -33,7 +33,7 @@ test('Toggle state of three todos', async ({ page }) => {
     await angularHomepage.addMultipleTodos(3, "Example");
     await angularHomepage.markAsCompletedByText(["Example1", "Example2", "Example3"]);
     await angularHomepage.clickToggleAll();
-    expect(await angularHomepage.checkMultipleTodosActiveByText(["Example1", "Example2", "Example3"])).toBe(true);
+    expect(await angularHomepage.checkTodosActiveByText(["Example1", "Example2", "Example3"])).toBe(true);
 });
 
 test('Toggle state of five todos', async ({ page }) => {
