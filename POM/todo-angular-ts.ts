@@ -29,8 +29,6 @@ export class AngularHomepage {
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
-
-
     }
 
     /**
@@ -345,11 +343,7 @@ export class AngularHomepage {
     async checkTodoAppendedToList(example: string): Promise<boolean> {
         await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
-
-        if (todoText === example) {
-            return true;
-        }
-        return false;
+        return (todoText === example);
     }
 
     /**
@@ -370,7 +364,7 @@ export class AngularHomepage {
      * @param example string that is being typed into the input box
      */
     async typeInInputBox(example: string): Promise<void> {
-        await this.newTodo.type(example)
+        await this.newTodo.type(example);
     }
 
     /**
@@ -384,7 +378,7 @@ export class AngularHomepage {
      * @returns the entry box locator 
      */
     async getEntryBox(): Promise<Locator> {
-        return this.entrybox
+        return this.entrybox;
     }
 
     /**
