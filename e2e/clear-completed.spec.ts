@@ -12,7 +12,7 @@ test('Clear one todo', async ({ page }) => {
     await angularHomepage.markAsCompletedByText('Example');
     await angularHomepage.clearCompleted();
     await expect(page.locator('body')).toHaveScreenshot('TodoBody.png');
-})
+});
 
 test('Clear multiple todos', async ({ page }) => {
     const angularHomepage : AngularHomepage = new AngularHomepage(page);
