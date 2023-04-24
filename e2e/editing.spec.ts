@@ -20,7 +20,7 @@ test('Editing - saving changes by pressing enter key', async ({ page }) => {
 
     // Verify that the editing class has been removed.
     expect(await angularHomepage.checkPresenceOfClass('editing')).toBe(false);
-})
+});
 
 test('Editing - saving changes by blurring input textbox', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -37,7 +37,7 @@ test('Editing - saving changes by blurring input textbox', async ({ page }) => {
 
     // Verify that the editing class has been removed.
     expect(await angularHomepage.checkPresenceOfClass('editing')).toBe(false);
-})
+});
 
 test('Edit todo and discard changes', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -48,7 +48,7 @@ test('Edit todo and discard changes', async ({ page }) => {
     await angularHomepage.editTodo(oldText, newText, 'escape');
 
     await expect(await angularHomepage.locateTodoBySubstring(oldText)).toBeVisible({ timeout: 3000, visible: true });
-})
+});
 
 test('Edit todo, don\'t change anything and discard edit', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -59,7 +59,7 @@ test('Edit todo, don\'t change anything and discard edit', async ({ page }) => {
     await angularHomepage.editTodo(oldText, newText, 'escape');
 
     await expect(await angularHomepage.locateTodoBySubstring(oldText)).toBeVisible({ timeout: 3000, visible: true });
-})
+});
 
 test('Destroy todo by removing text then saving by pressing the enter button', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -69,7 +69,7 @@ test('Destroy todo by removing text then saving by pressing the enter button', a
     await angularHomepage.editTodo(oldText, '', 'enter');
 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-})
+});
 
 test('Destroy todo by removing all non-whitespace, then saving by pressing the enter button', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -79,7 +79,7 @@ test('Destroy todo by removing all non-whitespace, then saving by pressing the e
     await angularHomepage.editTodo(oldText, '  	    ', 'enter');
 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-})
+});
 
 test('Enable editing inputs', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -96,7 +96,7 @@ test('Enable editing inputs', async ({ page }) => {
     const inputBox = await angularHomepage.getInputBox(oldText);
     // Check the input box is focussed.
     await expect(inputBox).toBeFocused({ timeout: 3000 });
-})
+});
 
 test('Remove leading spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -112,7 +112,7 @@ test('Remove leading spaces on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove leading tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -128,7 +128,7 @@ test('Remove leading tabs on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove leading tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -144,7 +144,7 @@ test('Remove leading tabs and spaces on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove trailing spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -160,9 +160,7 @@ test('Remove trailing spaces on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
-
-
+});
 
 test('Remove trailing tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -178,7 +176,7 @@ test('Remove trailing tabs on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove trailing tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -194,7 +192,7 @@ test('Remove trailing tabs and spaces on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove leading and trailing spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -210,7 +208,7 @@ test('Remove leading and trailing spaces on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove leading and trailing tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -226,7 +224,7 @@ test('Remove leading and trailing tabs on save', async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
 test('Remove leading and trailing tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
@@ -242,4 +240,4 @@ test('Remove leading and trailing tabs and spaces on save', async ({ page }) => 
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});

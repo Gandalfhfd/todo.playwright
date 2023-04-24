@@ -11,7 +11,7 @@ test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
     await angularHomepage.enterEditMode('Example');
     await page.reload();
     expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
-})
+});
 
 test('Check todos are stored with correct keys', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
@@ -36,7 +36,7 @@ test('Check todos are stored with correct keys', async ({ page }) => {
 
     expect(keysArray[0]).toEqual('title');
     expect(keysArray[1]).toEqual('completed');
-})
+});
 
 test('localStorage', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
@@ -46,4 +46,4 @@ test('localStorage', async ({ page }) => {
     let localStorage = await angularHomepage.getLocalStorage();
 
     expect(localStorage.name).toContain('todos-angularjs-typescript');
-})
+});

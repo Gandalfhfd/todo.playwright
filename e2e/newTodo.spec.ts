@@ -47,6 +47,3 @@ test('Creation of todo when todo list empty', async ({ page }) => {
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
     expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });
-
-
-

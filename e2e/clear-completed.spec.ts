@@ -24,4 +24,4 @@ test('Clear multiple todos', async ({ page }) => {
     await angularHomepage.markAsCompletedByText('Example3');
     await angularHomepage.clearCompleted();
     await expect(page.locator('body')).toHaveScreenshot('TodoBodyOneActive.png');
-})
+});
