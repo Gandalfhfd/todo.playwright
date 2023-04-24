@@ -2,8 +2,8 @@ import { Locator, Page } from '@playwright/test';
 
 // Is the format of the browser's localStorage.
 interface localStorage {
-    name: string;
-    value: string;
+    readonly name: string;
+    readonly value: string;
 }
 
 export class AngularHomepage {
