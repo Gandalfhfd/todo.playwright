@@ -202,7 +202,7 @@ export class AngularHomepage {
 
     /**
      * Returns the locator of the completed checkbox
-     * Does not work with multiple todos
+     * @remarks does not work with multiple todos
      * @returns the locator of the completed checkbox
      */
     async returnCompletedCheckboxLocator(): Promise<Locator> {
@@ -211,7 +211,7 @@ export class AngularHomepage {
 
     /**
      * Returns the locator of the delete button
-     * Does not work with multiple todos
+     * @remarks does not work with multiple todos
      * @returns the locator of the completed checkbox
      */
     async returnDeleteButtonLocator(): Promise<Locator> {
