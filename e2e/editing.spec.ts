@@ -5,11 +5,11 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
-test("Editing - saving changes by pressing enter key", async ({ page }) => {
+test('Editing - saving changes by pressing enter key', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newText: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newText: string = 'Ipsum';
 
     // Create new todo and edit it, saving by pressing enter key.
     await angularHomepage.addNewTodo(oldText);
@@ -19,14 +19,14 @@ test("Editing - saving changes by pressing enter key", async ({ page }) => {
     await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({ timeout: 3000, visible: true });
 
     // Verify that the editing class has been removed.
-    expect(await angularHomepage.checkPresenceOfClass("editing")).toBe(false);
-})
+    expect(await angularHomepage.checkPresenceOfClass('editing')).toBe(false);
+});
 
-test("Editing - saving changes by blurring input textbox", async ({ page }) => {
+test('Editing - saving changes by blurring input textbox', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newText: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newText: string = 'Ipsum';
 
     // Create new todo and edit it, saving by pressing enter key.
     await angularHomepage.addNewTodo(oldText);
@@ -36,54 +36,54 @@ test("Editing - saving changes by blurring input textbox", async ({ page }) => {
     await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({ timeout: 3000, visible: true });
 
     // Verify that the editing class has been removed.
-    expect(await angularHomepage.checkPresenceOfClass("editing")).toBe(false);
-})
+    expect(await angularHomepage.checkPresenceOfClass('editing')).toBe(false);
+});
 
 test('Edit todo and discard changes', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = "Lorem";
+    let oldText: string = 'Lorem';
     let newText: string = 'Ipsum'
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newText, 'escape');
 
     await expect(await angularHomepage.locateTodoBySubstring(oldText)).toBeVisible({ timeout: 3000, visible: true });
-})
+});
 
-test("Edit todo, don't change anything and discard edit", async ({ page }) => {
+test('Edit todo, don\'t change anything and discard edit', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = "Lorem";
+    let oldText: string = 'Lorem';
     let newText: string = 'Ipsum'
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newText, 'escape');
 
     await expect(await angularHomepage.locateTodoBySubstring(oldText)).toBeVisible({ timeout: 3000, visible: true });
-})
+});
 
-test("Destroy todo by removing text then saving by pressing the enter button", async ({ page }) => {
+test('Destroy todo by removing text then saving by pressing the enter button', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = "Lorem";
+    let oldText: string = 'Lorem';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, '', 'enter');
 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-})
+});
 
-test("Destroy todo by removing all non-whitespace, then saving by pressing the enter button", async ({ page }) => {
+test('Destroy todo by removing all non-whitespace, then saving by pressing the enter button', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = "Lorem";
+    let oldText: string = 'Lorem';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, '  	    ', 'enter');
 
     expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-})
+});
 
-test("Enable editing inputs", async ({ page }) => {
+test('Enable editing inputs', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = "Lorem";
+    let oldText: string = 'Lorem';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.enterEditMode(oldText);
@@ -96,14 +96,14 @@ test("Enable editing inputs", async ({ page }) => {
     const inputBox = await angularHomepage.getInputBox(oldText);
     // Check the input box is focussed.
     await expect(inputBox).toBeFocused({ timeout: 3000 });
-})
+});
 
-test("Remove leading spaces on save", async ({ page }) => {
+test('Remove leading spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "   Ipsum";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = '   Ipsum';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -112,14 +112,14 @@ test("Remove leading spaces on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove leading tabs on save", async ({ page }) => {
+test('Remove leading tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "		Ipsum";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = '		Ipsum';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -128,14 +128,14 @@ test("Remove leading tabs on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove leading tabs and spaces on save", async ({ page }) => {
+test('Remove leading tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = " 	 	Ipsum";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = ' 	 	Ipsum';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -144,14 +144,14 @@ test("Remove leading tabs and spaces on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove trailing spaces on save", async ({ page }) => {
+test('Remove trailing spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "Ipsum   ";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = 'Ipsum   ';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -160,16 +160,14 @@ test("Remove trailing spaces on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-
-
-test("Remove trailing tabs on save", async ({ page }) => {
+test('Remove trailing tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "Ipsum		";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = 'Ipsum		';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -178,14 +176,14 @@ test("Remove trailing tabs on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove trailing tabs and spaces on save", async ({ page }) => {
+test('Remove trailing tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "Ipsum 	 	";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = 'Ipsum 	 	';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -194,14 +192,14 @@ test("Remove trailing tabs and spaces on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove leading and trailing spaces on save", async ({ page }) => {
+test('Remove leading and trailing spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "   Ipsum   ";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = '   Ipsum   ';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -210,14 +208,14 @@ test("Remove leading and trailing spaces on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove leading and trailing tabs on save", async ({ page }) => {
+test('Remove leading and trailing tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = "		Ipsum		";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = '		Ipsum		';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -226,14 +224,14 @@ test("Remove leading and trailing tabs on save", async ({ page }) => {
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});
 
-test("Remove leading and trailing tabs and spaces on save", async ({ page }) => {
+test('Remove leading and trailing tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = "Lorem";
-    let newTextWithWhitespace: string = " 	 	Ipsum 	 	";
-    let newTextWithoutWhitespace: string = "Ipsum";
+    let oldText: string = 'Lorem';
+    let newTextWithWhitespace: string = ' 	 	Ipsum 	 	';
+    let newTextWithoutWhitespace: string = 'Ipsum';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
@@ -242,4 +240,4 @@ test("Remove leading and trailing tabs and spaces on save", async ({ page }) => 
     expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
     // Check that the leading whitespace has been removed when in editing mode.
     expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
-})
+});

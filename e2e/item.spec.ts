@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {AngularHomepage} from '../POM/todo-angular-ts';
 
-let lorem: string = "Lorem";  
+let lorem: string = 'Lorem';  
 
 test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
@@ -19,7 +19,7 @@ test('Enable editing mode', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     await toDo.enterEditMode(lorem);
     await page.getByRole('listitem').getByRole('textbox').fill('test');
-    expect(await toDo.checkTodoBeingEditedByText("test")).toBe(true);
+    expect(await toDo.checkTodoBeingEditedByText('test')).toBe(true);
 });
 
 test('Remove button shows on hover', async ({ page }) => {
