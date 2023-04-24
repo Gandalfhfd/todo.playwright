@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
-let example: string = "example";   
+let example: string = 'example';   
 
 // Tests if the input element is in focus using the autofocus method
 test('Check element in focus', async ({ page }) => {
@@ -29,7 +29,7 @@ test('Check trim is applied', async ({ page }) => {
 // Tests if a newly added todo gets appended to the todo list when other todos exist
 test('Creation of todo when todos exist', async ({ page }) => {
     const toDo = new AngularHomepage(page);
-    let test: string = "test";    
+    let test: string = 'test';    
     let todoNum: number = 3;
 
     for(let i = 0; i < todoNum; i++)
