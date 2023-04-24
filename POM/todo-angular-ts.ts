@@ -393,4 +393,12 @@ export class AngularHomepage {
 
         return myLocalStorage;
     }
+
+    /**
+     * Hover over a specific todo
+     * @param example specifies the todo list item
+     */
+    async hoverOverTodoByText(example: string): Promise<void>{
+        await this.listItem.hover();
+    }
 }

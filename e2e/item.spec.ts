@@ -1,31 +1,32 @@
 import { test, expect } from '@playwright/test';
 import {AngularHomepage} from '../POM/todo-angular-ts';
 
+let lorem: string = "Lorem";  
+
 test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
     const toDo = new AngularHomepage(page);
-    let lorem: string = "Lorem";    
+      
 
     await toDo.addNewTodo(lorem);
 });
 
-test('Mark TODO as complete', async ({ page }) => {
-    await page.locator('div').getByRole('checkbox').check();
-    const classValue = await page.locator('body > section > section > ul > li').getAttribute('class');
-    expect(classValue).toContain('ng-scope completed');
+test('Mark todo as complete', async ({ page }) => {
+    const toDo = new AngularHomepage(page);
+    await toDo.markAsCompletedByText(lorem);
+    expect(await toDo.checkTodosCompletedByText(lorem)).toBe(true);
 })
 
 test('Enable editing mode', async ({ page }) => {
-    await page.locator('body > section > section > ul > li > div > label').dblclick();
+    const toDo = new AngularHomepage(page);
+    await toDo.enterEditMode(lorem);
     await page.getByRole('listitem').getByRole('textbox').fill('test');
-
-    const classValue = await page.locator('body > section > section > ul > li').getAttribute('class');
-    expect(classValue).toContain('ng-scope editing');
+    expect(await toDo.checkTodoBeingEditedByText("test")).toBe(true);
     
 })
 
 test('Remove button on hover', async ({ page }) => {
-    await page.locator('body > section > section > ul > li > div > label').hover();
-    await expect(page.getByRole('button', { name: '×' })).toBeVisible();
-    
+    const toDo = new AngularHomepage(page);
+    await toDo.hoverOverTodoByText(lorem);
+    await expect(page.getByRole('button', { name: '×' })).toBeVisible();    
 })
