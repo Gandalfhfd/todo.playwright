@@ -22,10 +22,9 @@ test('Enable editing mode', async ({ page }) => {
     await toDo.enterEditMode(lorem);
     await page.getByRole('listitem').getByRole('textbox').fill('test');
     expect(await toDo.checkTodoBeingEditedByText("test")).toBe(true);
-    
 })
 
-test('Remove button on hover', async ({ page }) => {
+test('Remove button shows on hover', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     await toDo.hoverOverTodoByText(lorem);
     await expect(page.getByRole('button', { name: '×' })).toBeVisible();    

@@ -396,9 +396,9 @@ export class AngularHomepage {
 
     /**
      * Hover over a specific todo
-     * @param example specifies the todo list item
+     * @param nameOfTodo specifies the todo list item
      */
-    async hoverOverTodoByText(example: string): Promise<void>{
+    async hoverOverTodoByText(nameOfTodo: string): Promise<void> {
         await this.listItem.hover();
     }
 }
