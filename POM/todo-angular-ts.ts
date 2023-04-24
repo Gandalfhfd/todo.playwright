@@ -2,8 +2,8 @@ import { Locator, Page } from '@playwright/test';
 
 // Is the format of the browser's localStorage.
 interface localStorage {
-    name: string;
-    value: string;
+    readonly name: string;
+    readonly value: string;
 }
 
 export class AngularHomepage {
@@ -202,7 +202,7 @@ export class AngularHomepage {
 
     /**
      * Returns the locator of the completed checkbox
-     * Does not work with multiple todos
+     * @remarks does not work with multiple todos
      * @returns the locator of the completed checkbox
      */
     async returnCompletedCheckboxLocator(): Promise<Locator> {
@@ -211,7 +211,7 @@ export class AngularHomepage {
 
     /**
      * Returns the locator of the delete button
-     * Does not work with multiple todos
+     * @remarks does not work with multiple todos
      * @returns the locator of the completed checkbox
      */
     async returnDeleteButtonLocator(): Promise<Locator> {
@@ -392,5 +392,13 @@ export class AngularHomepage {
         let myLocalStorage: localStorage = storageState.origins[0].localStorage[0];
 
         return myLocalStorage;
+    }
+
+    /**
+     * Hover over a specific todo
+     * @param nameOfTodo specifies the todo list item
+     */
+    async hoverOverTodoByText(nameOfTodo: string): Promise<void> {
+        await this.listItem.hover();
     }
 }
