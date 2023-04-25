@@ -10,7 +10,6 @@ export class AngularHomepage {
     private readonly page: Page;
     private readonly newTodo: Locator;
     private readonly entrybox: Locator;
-    private readonly checkbox: Locator;
     private readonly clearCompletedButton: Locator;
     private readonly allFilter: Locator;
     private readonly activeFilter: Locator;
@@ -22,7 +21,6 @@ export class AngularHomepage {
         this.page = page;
         this.newTodo = page.locator('input[ng-model="newTodo"]');
         this.entrybox = page.getByPlaceholder('What needs to be done?');
-        this.checkbox = page.locator('div').getByRole('checkbox');
         this.clearCompletedButton = page.getByRole('button', { name: 'Clear completed' });
         this.allFilter = page.getByRole('link', { name: 'All' });
         this.activeFilter = page.getByRole('link', { name: 'Active' });
