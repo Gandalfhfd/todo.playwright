@@ -17,9 +17,8 @@ test('Check element in focus', async ({ page }) => {
 // Tests if string trimming works correctly
 test('Check trim is applied', async ({ page }) => {
     const toDo = new AngularHomepage(page);
-    let inputArray: string[] = ['test',' test','test ',' test ', 'test    '];
-
-    for (const data of inputArray)
+    let testData: string[] = ['test',' test','test ',' test ', 'test    '];
+    for (const data of testData)
     {
         await toDo.addNewTodo(data);
         expect((await (await toDo.getLastItemFromList()).innerText()).toString()).toBe('test');
@@ -31,12 +30,10 @@ test('Creation of todo when todos exist', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     let test: string = 'test';    
     let todoNum: number = 3;
-
     for(let i = 0; i < todoNum; i++)
     {
         await toDo.addNewTodo(test);
     }
-    
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
     expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });
