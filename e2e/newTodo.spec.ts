@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
-let example: string = "example";   
+let example: string = 'example';   
 
 // Tests if the input element is in focus using the autofocus method
 test('Check element in focus', async ({ page }) => {
@@ -17,9 +17,8 @@ test('Check element in focus', async ({ page }) => {
 // Tests if string trimming works correctly
 test('Check trim is applied', async ({ page }) => {
     const toDo = new AngularHomepage(page);
-    let inputArray: string[] = ['test',' test','test ',' test ', 'test    '];
-
-    for (const data of inputArray)
+    let testData: string[] = ['test',' test','test ',' test ', 'test    '];
+    for (const data of testData)
     {
         await toDo.addNewTodo(data);
         expect((await (await toDo.getLastItemFromList()).innerText()).toString()).toBe('test');
@@ -29,14 +28,12 @@ test('Check trim is applied', async ({ page }) => {
 // Tests if a newly added todo gets appended to the todo list when other todos exist
 test('Creation of todo when todos exist', async ({ page }) => {
     const toDo = new AngularHomepage(page);
-    let test: string = "test";    
+    let test: string = 'test';    
     let todoNum: number = 3;
-
     for(let i = 0; i < todoNum; i++)
     {
         await toDo.addNewTodo(test);
     }
-    
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
     expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });
@@ -47,6 +44,3 @@ test('Creation of todo when todo list empty', async ({ page }) => {
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
     expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });
-
-
-
