@@ -20,9 +20,6 @@ test('Check todos are stored with correct keys', async ({ page }) => {
     // Capture the local storage from the browser.
     let localStorage = await angularHomepage.getLocalStorage();
 
-    console.log(localStorage);
-    console.log(localStorage.value);
-
     // Find the value which should correspond to the todo we just added. In JSON format.
     let storedTodo: string = localStorage.value;
 
