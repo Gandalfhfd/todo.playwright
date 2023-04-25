@@ -60,7 +60,7 @@ Write-Output '*****Git push secondary****'
 #git remote set-url origin $destURLSetURL
 git push secondary --all -f
 Write-Output '*****Git remote prune secondary****'
-git remote prune secondary
+git remote prune origin
 Write-Output '**Azure Devops repo synced with Github repo**'
 Set-Location $stageDir
 if((Test-Path -path $githubDir))
