@@ -53,9 +53,9 @@ Set-Location $destination
 Write-Output '*****Git removing remote secondary****'
 git remote rm secondary
 Write-Output '*****Git remote add****'
-git remote add --mirror=fetch secondary $destURL
+git remote add --mirror=fetch secondary --prune $destURL
 Write-Output '*****Git fetch origin****'
-git fetch $sourceURL
+git fetch --prune $sourceURL
 Write-Output '*****Git push secondary****'
 #git remote set-url origin $destURLSetURL
 git push secondary --all -f
