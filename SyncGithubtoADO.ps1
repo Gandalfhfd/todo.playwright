@@ -57,6 +57,7 @@ git remote add --mirror=fetch secondary $destURL
 Write-Output '*****Git fetch origin****'
 git fetch $sourceURL
 Write-Output '*****Git push secondary****'
+git push secondary --delete Gandalfhfd-patch-1
 #git remote set-url origin $destURLSetURL
 git push secondary --all -f
 Write-Output '**Azure Devops repo synced with Github repo**'
