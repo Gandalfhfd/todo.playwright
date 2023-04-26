@@ -349,12 +349,7 @@ export class AngularHomepage {
      * @returns true if the inputValue inside the input box contains an empty string
      */
     async checkInputBoxEmpty(): Promise<boolean> {
-        if (await this.entrybox.inputValue() === '') {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return (await this.entrybox.inputValue() === '');
     }
 
     /**
