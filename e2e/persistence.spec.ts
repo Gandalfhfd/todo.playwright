@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
+    //const page = await browser.newPage();
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
@@ -10,6 +11,19 @@ test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
     await angularHomepage.addNewTodo('Example');
     await angularHomepage.enterEditMode('Example');
     await page.reload();
+    expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
+});
+
+test('Check editing mode isn\'t persisted on hard reload', async ({ browser, page }) => {
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
+    await angularHomepage.addNewTodo('Example');
+    await angularHomepage.enterEditMode('Example');
+    if (browser.browserType().name() === 'webkit') {
+        await page.keyboard.press('Meta+Alt+E');
+    } else {
+        await page.keyboard.press('Control+F5');
+    }
+
     expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
 });
 
