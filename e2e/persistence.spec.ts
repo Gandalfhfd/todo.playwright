@@ -22,7 +22,9 @@ test('Check editing mode isn\'t persisted in new tab', async ({ context, page })
     const newTab = await context.newPage();
     await newTab.goto('https://todomvc.com/examples/typescript-angular/#/');
 
-    expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
+    const secondAngularHomepage: AngularHomepage = new AngularHomepage(newTab);
+
+    expect(await secondAngularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
 });
 
 test('Check todos are stored with correct keys', async ({ page }) => {
