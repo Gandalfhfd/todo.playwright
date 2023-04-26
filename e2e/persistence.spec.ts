@@ -18,11 +18,9 @@ test('Check editing mode isn\'t persisted on hard reload', async ({ browser, pag
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addNewTodo('Example');
     await angularHomepage.enterEditMode('Example');
-    if (browser.browserType().name() === 'webkit') {
-        await page.keyboard.press('Meta+Alt+E');
-    } else {
-        await page.keyboard.press('Control+F5');
-    }
+    
+    const hardRefreshed = await (await browser.newContext()).newPage();
+    await hardRefreshed.goto('https://todomvc.com/examples/typescript-angular/#/');
 
     expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
 });
