@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 
 // Is the format of the browser's localStorage.
-interface localStorage {
+interface LocalStorage {
     readonly name: string;
     readonly value: string;
 }
@@ -378,11 +378,11 @@ export class AngularHomepage {
      * Capture localStorage of the browser and return it.
      * @returns localStorage of the browser. Uses the localStorage interface I created.
      */
-    async getLocalStorage(): Promise<localStorage> {
+    async getLocalStorage(): Promise<LocalStorage> {
         // Get the storage state of the browser.
         let storageState = await this.page.context().storageState();
         // Extract just the local storage and store it as the interface localStorage.
-        let myLocalStorage: localStorage = storageState.origins[0].localStorage[0];
+        let myLocalStorage: LocalStorage = storageState.origins[0].localStorage[0];
 
         return myLocalStorage;
     }
