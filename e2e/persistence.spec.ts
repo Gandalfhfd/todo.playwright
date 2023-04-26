@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
-    //const page = await browser.newPage();
     await page.goto('https://todomvc.com/examples/typescript-angular/#/')
 });
 
