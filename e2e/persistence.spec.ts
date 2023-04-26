@@ -14,13 +14,13 @@ test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
     expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
 });
 
-test('Check editing mode isn\'t persisted on hard reload', async ({ browser, page }) => {
+test('Check editing mode isn\'t persisted in new tab', async ({ context, page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addNewTodo('Example');
     await angularHomepage.enterEditMode('Example');
     
-    const hardRefreshed = await (await browser.newContext()).newPage();
-    await hardRefreshed.goto('https://todomvc.com/examples/typescript-angular/#/');
+    const newTab = await context.newPage();
+    await newTab.goto('https://todomvc.com/examples/typescript-angular/#/');
 
     expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
 });
