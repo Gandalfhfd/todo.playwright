@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 test('Editing - saving changes by pressing enter key', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newText: string = 'Ipsum';
 
     // Create new todo and edit it, saving by pressing enter key.
@@ -25,7 +25,7 @@ test('Editing - saving changes by pressing enter key', async ({ page }) => {
 test('Editing - saving changes by blurring input textbox', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newText: string = 'Ipsum';
 
     // Create new todo and edit it, saving by pressing enter key.
@@ -41,7 +41,7 @@ test('Editing - saving changes by blurring input textbox', async ({ page }) => {
 
 test('Edit todo and discard changes', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newText: string = 'Ipsum'
 
     await angularHomepage.addNewTodo(oldText);
@@ -52,7 +52,7 @@ test('Edit todo and discard changes', async ({ page }) => {
 
 test('Edit todo, don\'t change anything and discard edit', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newText: string = 'Ipsum'
 
     await angularHomepage.addNewTodo(oldText);
@@ -63,7 +63,7 @@ test('Edit todo, don\'t change anything and discard edit', async ({ page }) => {
 
 test('Destroy todo by removing text then saving by pressing the enter button', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, '', 'enter');
@@ -73,7 +73,7 @@ test('Destroy todo by removing text then saving by pressing the enter button', a
 
 test('Destroy todo by removing all non-whitespace, then saving by pressing the enter button', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.editTodo(oldText, '  	    ', 'enter');
@@ -83,7 +83,7 @@ test('Destroy todo by removing all non-whitespace, then saving by pressing the e
 
 test('Enable editing inputs', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.enterEditMode(oldText);
@@ -101,7 +101,7 @@ test('Enable editing inputs', async ({ page }) => {
 test('Remove leading spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = '   Ipsum';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -117,7 +117,7 @@ test('Remove leading spaces on save', async ({ page }) => {
 test('Remove leading tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = '		Ipsum';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -133,7 +133,7 @@ test('Remove leading tabs on save', async ({ page }) => {
 test('Remove leading tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = ' 	 	Ipsum';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -149,7 +149,7 @@ test('Remove leading tabs and spaces on save', async ({ page }) => {
 test('Remove trailing spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = 'Ipsum   ';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -165,7 +165,7 @@ test('Remove trailing spaces on save', async ({ page }) => {
 test('Remove trailing tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = 'Ipsum		';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -181,7 +181,7 @@ test('Remove trailing tabs on save', async ({ page }) => {
 test('Remove trailing tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = 'Ipsum 	 	';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -197,7 +197,7 @@ test('Remove trailing tabs and spaces on save', async ({ page }) => {
 test('Remove leading and trailing spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = '   Ipsum   ';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -213,7 +213,7 @@ test('Remove leading and trailing spaces on save', async ({ page }) => {
 test('Remove leading and trailing tabs on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = '		Ipsum		';
     let newTextWithoutWhitespace: string = 'Ipsum';
 
@@ -229,7 +229,7 @@ test('Remove leading and trailing tabs on save', async ({ page }) => {
 test('Remove leading and trailing tabs and spaces on save', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
 
-    let oldText: string = 'Lorem';
+    let oldText: string = 'example';
     let newTextWithWhitespace: string = ' 	 	Ipsum 	 	';
     let newTextWithoutWhitespace: string = 'Ipsum';
 

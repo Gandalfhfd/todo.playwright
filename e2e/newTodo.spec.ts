@@ -29,18 +29,23 @@ test('Check trim is applied', async ({ page }) => {
 test('Creation of todo when todos exist', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     let test: string = 'test';    
-    let todoNum: number = 3;
-    for(let i = 0; i < todoNum; i++)
+    let todoNums: number[] = [1, 2, 5];
+
+    for (const num of todoNums)
     {
-        await toDo.addNewTodo(test);
+        await toDo.addMultipleTodos(todoNums[num], test);
+        await toDo.addNewTodo(example);
+        expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
+        expect(await toDo.checkInputBoxEmpty()).toBe(true);
+        await toDo.clickToggleAll();
+        await toDo.clearCompleted();        
     }
-    expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
-    expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });
 
 // Tests if a newly added todo gets appended to the todo list when the list is empty
 test('Creation of todo when todo list empty', async ({ page }) => {
     const toDo = new AngularHomepage(page);
+    await toDo.addNewTodo(example);
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
     expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });

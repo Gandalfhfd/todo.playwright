@@ -28,7 +28,7 @@ test('Check editing mode isn\'t persisted in new tab', async ({ context, page })
 
 test('Check todos are stored with correct keys', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('Lorem');
+    await angularHomepage.addNewTodo('example');
 
     // Capture the local storage from the browser.
     let localStorage = await angularHomepage.getLocalStorage();
@@ -50,7 +50,7 @@ test('Check todos are stored with correct keys', async ({ page }) => {
 
 test('localStorage', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('lorem');
+    await angularHomepage.addNewTodo('example');
     
     // Capture the local storage from the browser.
     let localStorage = await angularHomepage.getLocalStorage();

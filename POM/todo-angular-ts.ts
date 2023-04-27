@@ -16,6 +16,8 @@ export class AngularHomepage {
     private readonly completedFilter: Locator;
     private readonly toggleAll: Locator;
     private readonly listItem: Locator;
+    private readonly activeEntryBox: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
@@ -27,6 +29,8 @@ export class AngularHomepage {
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
+        this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
+
     }
 
     /**
@@ -339,7 +343,6 @@ export class AngularHomepage {
      * @returns true if the last item added to the list matches example 
      */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
         return (todoText === example);
     }
@@ -392,6 +395,14 @@ export class AngularHomepage {
      * @param nameOfTodo specifies the todo list item
      */
     async hoverOverTodoByText(nameOfTodo: string): Promise<void> {
-        await this.listItem.hover();
+        await (await this.locateTodoBySubstring(nameOfTodo)).hover();
+    }
+
+     /**
+     * Fill the input box with a string, without appending to the todo list
+     * @param example the string that the entry box will be filled with
+     */
+     async fillActiveEntryBox(example: string): Promise<void>{
+        this.activeEntryBox.fill(example);
     }
 }
