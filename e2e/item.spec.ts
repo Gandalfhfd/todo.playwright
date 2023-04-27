@@ -4,7 +4,7 @@ import { AngularHomepage } from '../POM/todo-angular-ts';
 let lorem: string = 'Lorem';  
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://todomvc.com/examples/typescript-angular/#/')
+    await page.goto('https://todomvc.com/examples/typescript-angular/#/');
     const toDo = new AngularHomepage(page);
     await toDo.addNewTodo(lorem);
 });
