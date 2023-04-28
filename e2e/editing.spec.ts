@@ -81,7 +81,7 @@ for (const position of whitespacePosition) {
         test(`Remove ${position} ${whitespaceType[i]} on save`, async ({ page }) => {
             let newTextWithWhitespace: string;
             const oldText: string = 'Lorem';
-            const newTextWithoutWhitespace: string = 'Ipsum';
+            const newText: string = 'Ipsum';
 
             const angularHomepage = new AngularHomepage(page);
             // Create todo which we will later add whitespace to.
@@ -90,13 +90,13 @@ for (const position of whitespacePosition) {
             // Decide where to put the whitespace and construct the text of the todo.
             switch (position) {
                 case 'leading':
-                    newTextWithWhitespace = whitespace[i] + newTextWithoutWhitespace;
+                    newTextWithWhitespace = whitespace[i] + newText;
                     break;
                 case 'trailing':
-                    newTextWithWhitespace = newTextWithoutWhitespace + whitespace[i];
+                    newTextWithWhitespace = newText + whitespace[i];
                     break;
                 case 'leading and trailing':
-                    newTextWithWhitespace = whitespace[i] + newTextWithoutWhitespace + whitespace[i];
+                    newTextWithWhitespace = whitespace[i] + newText + whitespace[i];
                     break;
             }
             
@@ -105,7 +105,7 @@ for (const position of whitespacePosition) {
             // Check that the leading whitespace has been removed when not in editing mode.
             expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
             // Check that the leading whitespace has been removed when in editing mode.
-            expect(await angularHomepage.checkTodoTrimmedInEditMode(newTextWithoutWhitespace)).toBe(true);
+            expect(await angularHomepage.checkTodoTrimmedInEditMode(newText)).toBe(true);
         });
     }
 }
