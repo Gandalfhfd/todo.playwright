@@ -73,13 +73,29 @@ export class AngularHomepage {
     }
 
     /**
+     * Create an array of strings from some baseText, appended with its index + 1
+     * @param numberOfElements the number of elements in the string array
+     * @param baseText the text from which to create the array
+     * @returns Array(baseText+1, baseText+2, ..., baseText+numberOfElements)
+     * @remarks uses type coalescing to allow us to add string and number
+     */
+    async createArrayOfEnumeratedStrings(numberOfElements: number, baseText: string): Promise<string[]> {
+        let returnArray = new Array<string>(numberOfElements);
+        for (let i = 1; i <= numberOfElements; i++) {
+            returnArray[i-1] = baseText + i;
+        }
+        return returnArray;
+    }
+
+    /**
      * Add a specified number of todos with names of the format baseText followed by a sequence number between 1 and count.
      * @param count The number of todos to create.
      * @param baseText The text each todo should contain before its sequence number.
      */
     async addMultipleTodos(count: number, baseText: string): Promise<void> {
-        for (let i = 1; i <= count; i++) {
-            await this.entrybox.type(baseText + i);
+        const todoNames = await this.createArrayOfEnumeratedStrings(count, baseText);
+        for (let i = 0; i < count; i++) {
+            await this.entrybox.type(todoNames[i]);
             await this.entrybox.press('Enter');
         }
     }

@@ -5,13 +5,18 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
-test('Mark all two todos as complete', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addMultipleTodos(2, 'Example');
-    await angularHomepage.markAsCompletedByText('Example2');
-    await angularHomepage.clickToggleAll();
-    expect(await angularHomepage.checkTodosCompletedByText(['Example1', 'Example2'])).toBe(true);
-});
+const numberOfTodosBeingTested: number[] = [2, 5];
+for (const num of numberOfTodosBeingTested) {
+    test(`Mark all ${num} todos as complete`, async ({ page }) => {
+        const angularHomepage: AngularHomepage = new AngularHomepage(page);
+        const todos: string[] = await angularHomepage.createArrayOfEnumeratedStrings(num, 'Example');
+        await angularHomepage.addMultipleTodos(num, 'Example');
+        await angularHomepage.markAsCompletedByText('Example1');
+        await angularHomepage.clickToggleAll();
+        console.log(todos);
+        expect.soft(await angularHomepage.checkTodosCompletedByText(todos)).toBe(true);
+    });
+}
 
 test('Mark all five todos as complete', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
