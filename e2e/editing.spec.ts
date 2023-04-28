@@ -33,7 +33,7 @@ const newText: string[] = ['Lorem', 'Ipsum']
 for (const i in descriptionOfChanges) {
     test(`Make ${descriptionOfChanges[i]} changes to the todo and discard edit`, async ({ page }) => {
         const angularHomepage = new AngularHomepage(page);
-        let oldText: string = 'Lorem';
+        const oldText: string = 'Lorem';
 
         await angularHomepage.addNewTodo(oldText);
         await angularHomepage.editTodo(oldText, newText[i], 'escape');
