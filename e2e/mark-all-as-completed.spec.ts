@@ -27,7 +27,7 @@ for (const num of numberOfTodosBeingToggled) {
         await angularHomepage.clickToggleAll(); // All are marked as complete.
         expect(await angularHomepage.checkTodosCompletedByText(todos)).toBe(true);
     });
-};
+}
 
 for (const num of numberOfTodosBeingToggled) {
     test(`Toggle state of ${num} completed todos`, async ({ page }) => {
@@ -38,7 +38,7 @@ for (const num of numberOfTodosBeingToggled) {
         await angularHomepage.clickToggleAll(); // All are marked as active.
         expect(await angularHomepage.checkTodosActiveByText(todos)).toBe(true);
     });
-};
+}
 
 test('Clear checked state', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
