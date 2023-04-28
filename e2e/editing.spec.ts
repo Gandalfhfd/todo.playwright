@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 const changeSavingMethod: string[] = ['pressing enter key', 'blurring input textbox'];
-const key: ('enter' | 'blur')[] = ['enter', 'blur'];
+const method: ('enter' | 'blur')[] = ['enter', 'blur'];
 
 for (const i in changeSavingMethod) {
     test(`Editing - saving changes by ${changeSavingMethod[i]}`, async ({ page }) => {
@@ -17,7 +17,7 @@ for (const i in changeSavingMethod) {
 
         // Create new todo and edit it, saving by pressing enter key.
         await angularHomepage.addNewTodo(oldText);
-        await angularHomepage.editTodo(oldText, newText, key[i]);
+        await angularHomepage.editTodo(oldText, newText, method[i]);
 
         // Verify that the todo's text is what we expect.
         await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({ timeout: 3000, visible: true });
