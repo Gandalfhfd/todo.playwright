@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
-const classList = ['main', 'footer'];
+const classList: ('main' | 'footer')[] = ['main', 'footer'];
 
 for (const className of classList) {
     test(`Check ${className} hidden when no todos from start`, async ({ page }) => {
