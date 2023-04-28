@@ -33,7 +33,7 @@ const newText: string[] = ['Lorem', 'Ipsum']
 for (const i in descriptionOfChanges) {
     test(`Make ${descriptionOfChanges[i]} changes to the todo and discard edit`, async ({ page }) => {
         const angularHomepage = new AngularHomepage(page);
-        let oldText: string = 'Lorem';
+        const oldText: string = 'Lorem';
 
         await angularHomepage.addNewTodo(oldText);
         await angularHomepage.editTodo(oldText, newText[i], 'escape');
@@ -74,7 +74,7 @@ test('Enable editing inputs', async ({ page }) => {
     await expect(inputBox).toBeFocused({ timeout: 3000 });
 });
 
-const whitespacePosition: string[] = ['leading', 'trailing', 'leading and trailing'];
+const whitespacePosition: ('leading' | 'trailing' | 'leading and trailing')[] = ['leading', 'trailing', 'leading and trailing'];
 const descriptionOfWhitespaceType: string[] = ['tabs', 'spaces', 'tabs and spaces'];
 const whitespaceType: string[] = ['		', '   ', ' 	 	'];
 let newTextWithWhitespace: string;
@@ -85,12 +85,16 @@ for (const position of whitespacePosition) {
     for (const i in descriptionOfWhitespaceType) {
         test(`Remove ${position} ${descriptionOfWhitespaceType[i]} on save`, async ({ page }) => {
 
-            if (position === 'leading') {
-                newTextWithWhitespace = whitespaceType[i] + newTextWithoutWhitespace;
-            } else if (position === 'trailing') {
-                newTextWithWhitespace = newTextWithoutWhitespace + whitespaceType[i];
-            } else if (position === 'leading and trailing') {
-                newTextWithWhitespace = whitespaceType[i] + newTextWithoutWhitespace + whitespaceType[i];
+            switch (position) {
+                case 'leading':
+                    newTextWithWhitespace = whitespaceType[i] + newTextWithoutWhitespace;
+                    break;
+                case 'trailing':
+                    newTextWithWhitespace = newTextWithoutWhitespace + whitespaceType[i];
+                    break;
+                case 'leading and trailing':
+                    newTextWithWhitespace = whitespaceType[i] + newTextWithoutWhitespace + whitespaceType[i];
+                    break;
             }
 
             const angularHomepage = new AngularHomepage(page);
