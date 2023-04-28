@@ -7,12 +7,13 @@ test.beforeEach(async ({ page }) => {
 
 const changeSavingMethod: string[] = ['pressing enter key', 'blurring input textbox'];
 const key: ('enter' | 'blur')[] = ['enter', 'blur'];
+
 for (const i in changeSavingMethod) {
     test(`Editing - saving changes by ${changeSavingMethod[i]}`, async ({ page }) => {
         const angularHomepage = new AngularHomepage(page);
 
-        let oldText: string = 'Lorem';
-        let newText: string = 'Ipsum';
+        const oldText: string = 'Lorem';
+        const newText: string = 'Ipsum';
 
         // Create new todo and edit it, saving by pressing enter key.
         await angularHomepage.addNewTodo(oldText);
@@ -47,7 +48,7 @@ for (const i in descriptionOfReplacementText) {
     test(`Destroy todo by replacing text with ${descriptionOfReplacementText[i]}
         then saving by pressing the enter button`, async ({ page }) => {
         const angularHomepage = new AngularHomepage(page);
-        let oldText: string = 'Lorem';
+        const oldText: string = 'Lorem';
 
         await angularHomepage.addNewTodo(oldText);
         await angularHomepage.editTodo(oldText, replacementText[i], 'enter');
@@ -58,7 +59,7 @@ for (const i in descriptionOfReplacementText) {
 
 test('Enable editing inputs', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    let oldText: string = 'Lorem';
+    const oldText: string = 'Lorem';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.enterEditMode(oldText);
