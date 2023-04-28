@@ -5,8 +5,8 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
-const numberOfTodosBeingTested: number[] = [2, 5];
-for (const num of numberOfTodosBeingTested) {
+const numberOfTodosBeingMarkedAsComplete: number[] = [2, 5];
+for (const num of numberOfTodosBeingMarkedAsComplete) {
     test(`Mark all ${num} todos as complete`, async ({ page }) => {
         const angularHomepage: AngularHomepage = new AngularHomepage(page);
         const todos: string[] = await angularHomepage.createArrayOfEnumeratedStrings(num, 'Example');
@@ -18,35 +18,27 @@ for (const num of numberOfTodosBeingTested) {
     });
 }
 
-test('Mark all five todos as complete', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addMultipleTodos(5, 'Example');
-    await angularHomepage.markAsCompletedByText(['Example2', 'Example4']);
-    await angularHomepage.clickToggleAll();
-    expect(await angularHomepage.checkTodosCompletedByText(['Example1', 'Example2', 'Example3', 'Example4', 'Example5'])).toBe(true);
-});
+const numberOfTodosBeingToggled: number[] = [1, 3, 5];
+for (const num of numberOfTodosBeingToggled) {
+    test(`Toggle state of ${num} uncompleted todos`, async ({ page }) => {
+        const angularHomepage: AngularHomepage = new AngularHomepage(page);
+        const todos: string[] = await angularHomepage.createArrayOfEnumeratedStrings(num, 'Example');
+        await angularHomepage.addMultipleTodos(num, 'Example'); // All are marked as active.
+        await angularHomepage.clickToggleAll(); // All are marked as complete.
+        expect(await angularHomepage.checkTodosCompletedByText(todos)).toBe(true);
+    });
+};
 
-test('Toggle state of one todo', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('Example');
-    await angularHomepage.clickToggleAll();
-    expect(await angularHomepage.checkTodosCompletedByText('Example')).toBe(true);
-});
-
-test('Toggle state of three todos', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addMultipleTodos(3, 'Example');
-    await angularHomepage.markAsCompletedByText(['Example1', 'Example2', 'Example3']);
-    await angularHomepage.clickToggleAll();
-    expect(await angularHomepage.checkTodosActiveByText(['Example1', 'Example2', 'Example3'])).toBe(true);
-});
-
-test('Toggle state of five todos', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addMultipleTodos(5, 'Example');
-    await angularHomepage.clickToggleAll();
-    expect(await angularHomepage.checkTodosCompletedByText(['Example1', 'Example2', 'Example3', 'Example4', 'Example5'])).toBe(true);
-});
+for (const num of numberOfTodosBeingToggled) {
+    test(`Toggle state of ${num} completed todos`, async ({ page }) => {
+        const angularHomepage: AngularHomepage = new AngularHomepage(page);
+        const todos: string[] = await angularHomepage.createArrayOfEnumeratedStrings(num, 'Example');
+        await angularHomepage.addMultipleTodos(num, 'Example'); // All are marked as active.
+        await angularHomepage.markAsCompletedByText(todos); // All are marked as complete.
+        await angularHomepage.clickToggleAll(); // All are marked as active.
+        expect(await angularHomepage.checkTodosActiveByText(todos)).toBe(true);
+    });
+};
 
 test('Clear checked state', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
