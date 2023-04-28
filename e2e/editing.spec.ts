@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://todomvc.com/examples/typescript-angular/#/')
+    await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
 const changeSavingMethod: string[] = ['pressing enter key', 'blurring input textbox'];

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://todomvc.com/examples/typescript-angular/#/')
+    await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
 test('Changing route to all in URL', async ({ page }) => {
@@ -10,7 +10,6 @@ test('Changing route to all in URL', async ({ page }) => {
     await angularHomepage.addMultipleTodos(2, 'Example');
     await angularHomepage.markAsCompletedByText('Example2');
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
-    //await page.waitForTimeout(5000);
     expect(await angularHomepage.checkFilterSelected('all')).toBe(true);
     await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({ timeout: 3000, visible: true });
     await expect(await angularHomepage.locateTodoBySubstring('Example2')).toBeVisible({ timeout: 3000, visible: true });
@@ -41,7 +40,6 @@ test('Changing route to #!/ in URL', async ({ page }) => {
     await angularHomepage.addMultipleTodos(2, 'Example');
     await angularHomepage.markAsCompletedByText('Example2');
     await page.goto('https://todomvc.com/examples/typescript-angular/#!/');
-    //await page.waitForTimeout(5000);
     expect(await angularHomepage.checkFilterSelected('all')).toBe(true);
     await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({ timeout: 3000, visible: true });
     await expect(await angularHomepage.locateTodoBySubstring('Example2')).toBeVisible({ timeout: 3000, visible: true });

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { AngularHomepage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://todomvc.com/examples/typescript-angular/#/')
+    await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
 test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
@@ -11,6 +11,19 @@ test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
     await angularHomepage.enterEditMode('Example');
     await page.reload();
     expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
+});
+
+test('Check editing mode isn\'t persisted in new tab', async ({ context, page }) => {
+    const angularHomepage: AngularHomepage = new AngularHomepage(page);
+    await angularHomepage.addNewTodo('Example');
+    await angularHomepage.enterEditMode('Example');
+    
+    const newTab = await context.newPage();
+    await newTab.goto('https://todomvc.com/examples/typescript-angular/#/');
+
+    const secondAngularHomepage: AngularHomepage = new AngularHomepage(newTab);
+
+    expect(await secondAngularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
 });
 
 test('Check todos are stored with correct keys', async ({ page }) => {
@@ -24,7 +37,7 @@ test('Check todos are stored with correct keys', async ({ page }) => {
     let storedTodo: string = localStorage.value;
 
     // Convert string to JSON so that the keys can be extracted.
-    let todoJSON = await JSON.parse(storedTodo);
+    let todoJSON: JSON = await JSON.parse(storedTodo);
     // Extract keys from JSON so that we can compare them to what we expect.
     let keysArray: string[] = Object.keys(todoJSON[0]);
 
