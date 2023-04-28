@@ -102,9 +102,9 @@ for (const position of whitespacePosition) {
             
             await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
-            // Check that the leading whitespace has been removed when not in editing mode.
+            // Check that the leading and/or trailing whitespace has been removed when not in editing mode.
             expect(await angularHomepage.checkTodoPresentByTextAndIsTrimmed(newTextWithWhitespace)).toBe(true);
-            // Check that the leading whitespace has been removed when in editing mode.
+            // Check that the leading and/or trailing whitespace has been removed when in editing mode.
             expect(await angularHomepage.checkTodoTrimmedInEditMode(newText)).toBe(true);
         });
     }
