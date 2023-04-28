@@ -71,14 +71,14 @@ test('Enable editing inputs', async ({ page }) => {
 });
 
 const whitespacePosition: ('leading' | 'trailing' | 'leading and trailing')[] = ['leading', 'trailing', 'leading and trailing'];
-const descriptionOfWhitespaceType: string[] = ['tabs', 'spaces', 'tabs and spaces'];
-const whitespaceType: string[] = ['\x09', '\x20\x20\x20', '\x09\x20\x09\x20']; // \x09 is a tab, \x20 is a space
+const whitespaceType: string[] = ['tabs', 'spaces', 'tabs and spaces'];
+const whitespace: string[] = ['\x09', '\x20\x20\x20', '\x09\x20\x09\x20']; // \x09 is a tab, \x20 is a space
 
 // Iterate through the places where whitespace could be added.
 for (const position of whitespacePosition) {
     // Iterate through the types of whitespace we are adding.
-    for (const i in descriptionOfWhitespaceType) {
-        test(`Remove ${position} ${descriptionOfWhitespaceType[i]} on save`, async ({ page }) => {
+    for (const i in whitespaceType) {
+        test(`Remove ${position} ${whitespaceType[i]} on save`, async ({ page }) => {
             let newTextWithWhitespace: string;
             const oldText: string = 'Lorem';
             const newTextWithoutWhitespace: string = 'Ipsum';
@@ -90,13 +90,13 @@ for (const position of whitespacePosition) {
             // Decide where to put the whitespace and construct the text of the todo.
             switch (position) {
                 case 'leading':
-                    newTextWithWhitespace = whitespaceType[i] + newTextWithoutWhitespace;
+                    newTextWithWhitespace = whitespace[i] + newTextWithoutWhitespace;
                     break;
                 case 'trailing':
-                    newTextWithWhitespace = newTextWithoutWhitespace + whitespaceType[i];
+                    newTextWithWhitespace = newTextWithoutWhitespace + whitespace[i];
                     break;
                 case 'leading and trailing':
-                    newTextWithWhitespace = whitespaceType[i] + newTextWithoutWhitespace + whitespaceType[i];
+                    newTextWithWhitespace = whitespace[i] + newTextWithoutWhitespace + whitespace[i];
                     break;
             }
             
