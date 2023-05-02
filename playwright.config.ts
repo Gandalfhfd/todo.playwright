@@ -1,6 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import { AzureReporterOptions } from '@alex_neo/playwright-azure-reporter/dist/playwright-azure-reporter';
-
 
 /**
  * Read environment variables from file.
@@ -22,33 +20,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['json', {outputFile: './results.json'}]],
-  // reporter: [
-  //   ['list'],
-  //   [
-  //     '@alex_neo/playwright-azure-reporter',
-  //     {
-  //       orgUrl: 'https://dev.azure.com/nfocus/',
-  //       token: process.env.ADO_PAT,
-  //       planId: 6737,
-  //       projectName: 'TODO%20Intake%204',
-  //       publishTestResultsMode: 'testRun',
-  //       uploadAttachments: true,
-  //       attachmentsType: ['screenshot', 'video', 'trace'],
-  //       testRunConfig: {
-  //         owner: {
-  //           displayName: 'Intake 4',
-  //         },
-  //         comment: 'Playwright Test Run',
-  //         // the configuration ids of this test run, use 
-  //         // https://dev.azure.com/{organization}/{project}/_apis/test/configurations to get the ids of  your project.
-  //         // if multiple configuration ids are used in one run a testPointMapper should be used to pick the correct one, 
-  //         // otherwise the results are pushed to all.
-  //         configurationIds: [ 143 ],
-  //       },
-  //     } as AzureReporterOptions,
-  //   ],
-  // ],
+  reporter: [['junit', {outputFile: 'test-results/e2e-junit-results.xml'}]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: false,

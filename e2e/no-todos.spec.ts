@@ -5,17 +5,15 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
-test('Check main hidden when no todos from start', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-    expect(await angularHomepage.checkPresenceOfClass('main')).toBe(false);
-});
+const classList: ('main' | 'footer')[] = ['main', 'footer'];
 
-test('Check footer hidden when no todos from start', async ({ page }) => {
-    const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
-    expect(await angularHomepage.checkPresenceOfClass('footer')).toBe(false);
-});
+for (const className of classList) {
+    test(`Check ${className} hidden when no todos from start`, async ({ page }) => {
+        const angularHomepage: AngularHomepage = new AngularHomepage(page);
+        expect(await angularHomepage.checkAnyTodosPresent()).toBe(false);
+        expect(await angularHomepage.checkPresenceOfClass(className)).toBe(false);
+    });
+}
 
 test('Check main and footer after deleting one todo', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
