@@ -16,7 +16,7 @@ jobs:
                 targetType: 'inline'
                 failOnStderr: true
                 env:
-                  CI: true
+                  CI: false
                 script: |
                   npm ci
                   npx playwright test
