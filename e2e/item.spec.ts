@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     await toDo.addNewTodo(exampleText);
 });
 
-test('[6739] Mark todo as complete', async ({ page }) => {
+test('Mark todo as complete', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     await toDo.markAsCompletedByText(exampleText);
     expect(await toDo.checkTodosCompletedByText(exampleText)).toBe(true);
