@@ -9,9 +9,6 @@ jobs:
           deploy:
             steps:
             - checkout: self
-            - task: Npm@1
-              inputs:
-                command: 'install'
             - task: Bash@3
               displayName: 'Run Playwright tests'
               inputs:
