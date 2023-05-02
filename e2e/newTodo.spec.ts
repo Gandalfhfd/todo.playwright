@@ -14,33 +14,32 @@ test('Check element in focus', async ({ page }) => {
     await toDo.typeInInputBox('example');
 });
 
-// Tests if string trimming works correctly
-test('Check trim is applied', async ({ page }) => {
-    const toDo = new AngularHomepage(page);
-    let testData: string[] = ['test',' test','test ',' test ', 'test    '];
-    for (const data of testData)
-    {
-        await toDo.addNewTodo(data);
+const inputStrings: string[] = ['test','\x20test','test\x20','\x20test\x20', 'test\x20\x09'];     // \x09 is a tab, \x20 is a space
+// Tests if string trimming works correctly with different inputs
+for(const testInput of inputStrings){
+    test(`Check trim is applied to ${testInput}`, async ({ page }) => {
+        const toDo = new AngularHomepage(page);
+        await toDo.addNewTodo(testInput);
         expect((await (await toDo.getLastItemFromList()).innerText()).toString()).toBe('test');
-    }
-});
+    });
+}
 
+const numberOfTodos: number[] = [1,2,5];
 // Tests if a newly added todo gets appended to the todo list when other todos exist
-test('Creation of todo when todos exist', async ({ page }) => {
-    const toDo = new AngularHomepage(page);
-    let test: string = 'test';    
-    let todoNum: number = 3;
-    for(let i = 0; i < todoNum; i++)
-    {
-        await toDo.addNewTodo(test);
-    }
-    expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
-    expect(await toDo.checkInputBoxEmpty()).toBe(true);
-});
+for (const numb of numberOfTodos){
+    test(`Creation of a todo when ${numb} todo(s) exist(s)`, async ({ page }) => {
+        const toDo = new AngularHomepage(page);    
+        await toDo.addMultipleTodos(numb, 'test');
+        await toDo.addNewTodo(example);
+        expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
+        expect(await toDo.checkInputBoxEmpty()).toBe(true);
+    });
+}
 
 // Tests if a newly added todo gets appended to the todo list when the list is empty
 test('Creation of todo when todo list empty', async ({ page }) => {
     const toDo = new AngularHomepage(page);
+    await toDo.addNewTodo(example);
     expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
     expect(await toDo.checkInputBoxEmpty()).toBe(true);
 });
