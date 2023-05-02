@@ -18,7 +18,6 @@ export class AngularHomepage {
     private readonly listItem: Locator;
     private readonly activeEntryBox: Locator;
 
-
     constructor(page: Page) {
         this.page = page;
         this.newTodo = page.locator('input[ng-model="newTodo"]');
