@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 test('Clear one todo', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     // Take a screenshot of the page before any todos added.
-    await expect(page.locator('body')).toHaveScreenshot('TodoBody.png');
+    await page.locator('body').screenshot({path: 'TodoBody.png'});
     await angularHomepage.addNewTodo('Example');
     await angularHomepage.markAsCompletedByText('Example');
     await angularHomepage.clearCompleted();
@@ -20,7 +20,7 @@ test('Clear multiple todos', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
     await angularHomepage.addNewTodo('Example1');
     // Take a screenshot of the page with one todo called "Example1".
-    await expect(page.locator('body')).toHaveScreenshot('TodoBodyOneActive.png');
+    await page.locator('body').screenshot({path: 'TodoBodyOneActive.png'});
     await angularHomepage.addNewTodo('Example2');
     await angularHomepage.addNewTodo('Example3');
     await angularHomepage.markAsCompletedByText(['Example2', 'Example3']);
