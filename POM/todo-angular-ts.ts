@@ -1,7 +1,8 @@
 import { Locator, Page } from '@playwright/test';
+import { MyHelpers } from '../utils/helpers';
 
 // Is the format of the browser's localStorage.
-interface LocalStorage {
+export interface LocalStorage {
     readonly name: string;
     readonly value: string;
 }
@@ -16,6 +17,7 @@ export class AngularHomepage {
     private readonly completedFilter: Locator;
     private readonly toggleAll: Locator;
     private readonly listItem: Locator;
+    private readonly activeEntryBox: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -27,6 +29,7 @@ export class AngularHomepage {
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
+        this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
     }
 
     /**
@@ -73,27 +76,13 @@ export class AngularHomepage {
     }
 
     /**
-     * Create an array of strings from some baseText, appended with its index + 1
-     * @param numberOfElements the number of elements in the string array
-     * @param baseText the text from which to create the array
-     * @returns Array(baseText+1, baseText+2, ..., baseText+numberOfElements)
-     * @remarks uses type coalescing to allow us to add string and number
-     */
-    async createArrayOfEnumeratedStrings(numberOfElements: number, baseText: string): Promise<string[]> {
-        let returnArray = new Array<string>(numberOfElements);
-        for (let i = 1; i <= numberOfElements; i++) {
-            returnArray[i-1] = baseText + i;
-        }
-        return returnArray;
-    }
-
-    /**
      * Add a specified number of todos with names of the format baseText followed by a sequence number between 1 and count.
      * @param count The number of todos to create.
      * @param baseText The text each todo should contain before its sequence number.
      */
     async addMultipleTodos(count: number, baseText: string): Promise<void> {
-        const todoNames = await this.createArrayOfEnumeratedStrings(count, baseText);
+        const myHelpers = new MyHelpers();
+        const todoNames = await myHelpers.createArrayOfEnumeratedStrings(count, baseText);
         for (let i = 0; i < count; i++) {
             await this.entrybox.type(todoNames[i]);
             await this.entrybox.press('Enter');
@@ -169,9 +158,10 @@ export class AngularHomepage {
      * @returns true if a matching todo is found.
      */
     async checkTodoPresentByTextAndIsTrimmed(text: string): Promise<boolean> {
+        const myHelpers = new MyHelpers();
         try {
-            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
-            return this.checkStringHasBeenTrimmed(todoText);
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText();
+            return myHelpers.checkStringHasBeenTrimmed(todoText);
         } catch (error) {
             return false;
         }
@@ -184,21 +174,12 @@ export class AngularHomepage {
      */
     async checkTodoTrimmedInEditMode(text: string): Promise<boolean> {
         this.enterEditMode(text);
-
         // Get text from the edit mode input box.
         let inputBox = await this.getInputBox(text);
         let editingModeText: string = await inputBox.inputValue();
 
-        return this.checkStringHasBeenTrimmed(editingModeText);
-    }
-
-    /**
-     * Check if the input text has no leading and no trailing whitespace.
-     * @param text The text to check for whitespace.
-     * @returns true if the text has no surrounding whitespace.
-     */
-    async checkStringHasBeenTrimmed(text: string): Promise<boolean> {
-        return (text === text.trim());
+        const myHelpers = new MyHelpers();
+        return myHelpers.checkStringHasBeenTrimmed(editingModeText);
     }
 
     /**
@@ -207,7 +188,7 @@ export class AngularHomepage {
      */
     async checkAnyTodosPresent(): Promise<boolean> {
         try {
-            let _ = await this.page.locator('.view').isEnabled({ timeout: 3000 });
+            let _ = await this.page.locator('.view').isEnabled();
             return true;
         } catch (error) {
             return false;
@@ -284,7 +265,7 @@ export class AngularHomepage {
      */
     async checkPresenceOfClass(className: string): Promise<boolean> {
         try {
-            let _ = await this.page.locator("." + className).click({ timeout: 3000 });
+            let _ = await this.page.locator("." + className).click();
             return true;
         } catch (error) {
             return false;
@@ -355,7 +336,6 @@ export class AngularHomepage {
      * @returns true if the last item added to the list matches example 
      */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        await this.addNewTodo(example);
         const todoText = await this.listItem.last().textContent();
         return (todoText === example);
     }
@@ -408,6 +388,14 @@ export class AngularHomepage {
      * @param nameOfTodo specifies the todo list item
      */
     async hoverOverTodoByText(nameOfTodo: string): Promise<void> {
-        await this.listItem.hover();
+        await (await this.locateTodoBySubstring(nameOfTodo)).hover();
+    }
+
+    /**
+    * Fill the input box with a string, without appending to the todo list
+    * @param example the string that the entry box will be filled with
+    */
+    async fillActiveEntryBox(example: string): Promise<void> {
+        this.activeEntryBox.fill(example);
     }
 }

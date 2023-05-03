@@ -11,7 +11,7 @@ for (const i in changeSavingMethod) {
         const method: ('enter' | 'blur')[] = ['enter', 'blur'];
         const angularHomepage = new AngularHomepage(page);
 
-        const oldText: string = 'Lorem';
+        const oldText: string = 'Example';
         const newText: string = 'Ipsum';
 
         // Create new todo and edit it, saving by pressing enter key.
@@ -19,7 +19,7 @@ for (const i in changeSavingMethod) {
         await angularHomepage.editTodo(oldText, newText, method[i]);
 
         // Verify that the todo's text is what we expect.
-        await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({ timeout: 3000, visible: true });
+        await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({visible: true });
 
         // Verify that the editing class has been removed.
         expect(await angularHomepage.checkPresenceOfClass('editing')).toBe(false);
@@ -34,7 +34,7 @@ for (const description of ['no', 'some']) {
         await angularHomepage.addNewTodo(todoName[0]);
         await angularHomepage.editTodo(todoName[0], (description === 'no' ? todoName[0] : todoName[1]), 'escape');
 
-        await expect(await angularHomepage.locateTodoBySubstring(todoName[0])).toBeVisible({ timeout: 3000, visible: true });
+        await expect(await angularHomepage.locateTodoBySubstring(todoName[0])).toBeVisible({visible: true });
     });
 }
 
@@ -44,7 +44,7 @@ for (const i in descriptionOfReplacementText) {
     test(`Destroy todo by replacing text with ${descriptionOfReplacementText[i]}
         then saving by pressing the enter button`, async ({ page }) => {
         const angularHomepage = new AngularHomepage(page);
-        const oldText: string = 'Lorem';
+        const oldText: string = 'Example';
 
         await angularHomepage.addNewTodo(oldText);
         await angularHomepage.editTodo(oldText, replacementText[i], 'enter');
@@ -55,19 +55,19 @@ for (const i in descriptionOfReplacementText) {
 
 test('Enable editing inputs', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    const oldText: string = 'Lorem';
+    const oldText: string = 'Example';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.enterEditMode(oldText);
 
     // Check certain elements have been hidden.
-    expect(await angularHomepage.returnCompletedCheckboxLocator()).toBeVisible({ timeout: 3000, visible: false });
-    expect(await angularHomepage.returnDeleteButtonLocator()).toBeVisible({ timeout: 3000, visible: false });
+    expect(await angularHomepage.returnCompletedCheckboxLocator()).toBeVisible({visible: false });
+    expect(await angularHomepage.returnDeleteButtonLocator()).toBeVisible({visible: false });
 
     // Get the input box locator.
     const inputBox = await angularHomepage.getInputBox(oldText);
     // Check the input box is focussed.
-    await expect(inputBox).toBeFocused({ timeout: 3000 });
+    await expect(inputBox).toBeFocused();
 });
 
 const whitespacePosition: ('leading' | 'trailing' | 'leading and trailing')[] = ['leading', 'trailing', 'leading and trailing'];
@@ -80,7 +80,7 @@ for (const position of whitespacePosition) {
     for (const i in whitespaceType) {
         test(`Remove ${position} ${whitespaceType[i]} on save`, async ({ page }) => {
             let newTextWithWhitespace: string;
-            const oldText: string = 'Lorem';
+            const oldText: string = 'Example';
             const newText: string = 'Ipsum';
 
             const angularHomepage = new AngularHomepage(page);
@@ -99,7 +99,7 @@ for (const position of whitespacePosition) {
                     newTextWithWhitespace = whitespace[i] + newText + whitespace[i];
                     break;
             }
-            
+
             await angularHomepage.editTodo(oldText, newTextWithWhitespace, 'blur');
 
             // Check that the leading and/or trailing whitespace has been removed when not in editing mode.

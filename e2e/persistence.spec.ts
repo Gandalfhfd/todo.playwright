@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { AngularHomepage } from '../POM/todo-angular-ts';
+import { AngularHomepage, LocalStorage } from '../POM/todo-angular-ts';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
@@ -28,10 +28,10 @@ test('Check editing mode isn\'t persisted in new tab', async ({ context, page })
 
 test('Check todos are stored with correct keys', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('Lorem');
+    await angularHomepage.addNewTodo('example');
 
     // Capture the local storage from the browser.
-    let localStorage = await angularHomepage.getLocalStorage();
+    let localStorage: LocalStorage = await angularHomepage.getLocalStorage();
 
     // Find the value which should correspond to the todo we just added. In JSON format.
     let storedTodo: string = localStorage.value;
@@ -50,7 +50,7 @@ test('Check todos are stored with correct keys', async ({ page }) => {
 
 test('localStorage', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('lorem');
+    await angularHomepage.addNewTodo('example');
     
     // Capture the local storage from the browser.
     let localStorage = await angularHomepage.getLocalStorage();
