@@ -67,7 +67,7 @@ test('Enable editing inputs', async ({ page }) => {
     // Get the input box locator.
     const inputBox = await angularHomepage.getInputBox(oldText);
     // Check the input box is focussed.
-    await expect(inputBox).toBeFocused({ timeout: 3000 });
+    await expect(inputBox).toBeFocused();
 });
 
 const whitespacePosition: ('leading' | 'trailing' | 'leading and trailing')[] = ['leading', 'trailing', 'leading and trailing'];

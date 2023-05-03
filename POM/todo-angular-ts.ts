@@ -160,7 +160,7 @@ export class AngularHomepage {
     async checkTodoPresentByTextAndIsTrimmed(text: string): Promise<boolean> {
         const myHelpers = new MyHelpers();
         try {
-            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText();
             return myHelpers.checkStringHasBeenTrimmed(todoText);
         } catch (error) {
             return false;
@@ -188,7 +188,7 @@ export class AngularHomepage {
      */
     async checkAnyTodosPresent(): Promise<boolean> {
         try {
-            let _ = await this.page.locator('.view').isEnabled({ timeout: 3000 });
+            let _ = await this.page.locator('.view').isEnabled();
             return true;
         } catch (error) {
             return false;
@@ -265,7 +265,7 @@ export class AngularHomepage {
      */
     async checkPresenceOfClass(className: string): Promise<boolean> {
         try {
-            let _ = await this.page.locator("." + className).click({ timeout: 3000 });
+            let _ = await this.page.locator("." + className).click();
             return true;
         } catch (error) {
             return false;
