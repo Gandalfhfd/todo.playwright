@@ -62,8 +62,6 @@ export class AngularHomepage {
             case 'escape':
                 await this.page.keyboard.press('Escape');
                 break;
-            default:
-                throw new Error("Incorrect saveMethod passed to EditTodo. saveMethod must be blur, enter or escape.");
         }
     }
 
@@ -137,8 +135,6 @@ export class AngularHomepage {
                 return (await this.activeFilter.getAttribute('class') === 'selected');
             case 'completed':
                 return (await this.completedFilter.getAttribute('class') === 'selected');
-            default:
-                throw new Error("Invalid filter passed to checkFilterSelected. Filter must be all, active or completed.");
         }
     }
 
@@ -252,9 +248,6 @@ export class AngularHomepage {
             case 'completed':
                 await this.completedFilter.click();
                 break;
-            default:
-                //const _exhaustiveCheck: never = filter;
-                throw new Error("Invalid filter passed to filterByButton. Filter must be all, active or completed.");
         }
     }
 
