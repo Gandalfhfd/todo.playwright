@@ -7,28 +7,28 @@ test.beforeEach(async ({ page }) => {
 
 test('Check editing mode isn\'t persisted on reload', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('Example');
-    await angularHomepage.enterEditMode('Example');
+    await angularHomepage.addNewTodo('Lorem');
+    await angularHomepage.enterEditMode('Lorem');
     await page.reload();
-    expect(await angularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
+    expect(await angularHomepage.checkTodoBeingEditedByText('Lorem')).toBe(false);
 });
 
 test('Check editing mode isn\'t persisted in new tab', async ({ context, page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('Example');
-    await angularHomepage.enterEditMode('Example');
+    await angularHomepage.addNewTodo('Lorem');
+    await angularHomepage.enterEditMode('Lorem');
     
     const newTab = await context.newPage();
     await newTab.goto('https://todomvc.com/examples/typescript-angular/#/');
 
     const secondAngularHomepage: AngularHomepage = new AngularHomepage(newTab);
 
-    expect(await secondAngularHomepage.checkTodoBeingEditedByText('Example')).toBe(false);
+    expect(await secondAngularHomepage.checkTodoBeingEditedByText('Lorem')).toBe(false);
 });
 
 test('Check todos are stored with correct keys', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('example');
+    await angularHomepage.addNewTodo('Lorem');
 
     // Capture the local storage from the browser.
     let localStorage: LocalStorage = await angularHomepage.getLocalStorage();
@@ -50,7 +50,7 @@ test('Check todos are stored with correct keys', async ({ page }) => {
 
 test('localStorage', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('example');
+    await angularHomepage.addNewTodo('Lorem');
     
     // Capture the local storage from the browser.
     let localStorage = await angularHomepage.getLocalStorage();

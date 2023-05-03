@@ -11,7 +11,7 @@ for (const i in changeSavingMethod) {
         const method: ('enter' | 'blur')[] = ['enter', 'blur'];
         const angularHomepage = new AngularHomepage(page);
 
-        const oldText: string = 'Example';
+        const oldText: string = 'Lorem';
         const newText: string = 'Ipsum';
 
         // Create new todo and edit it, saving by pressing enter key.
@@ -44,7 +44,7 @@ for (const i in descriptionOfReplacementText) {
     test(`Destroy todo by replacing text with ${descriptionOfReplacementText[i]}
         then saving by pressing the enter button`, async ({ page }) => {
         const angularHomepage = new AngularHomepage(page);
-        const oldText: string = 'Example';
+        const oldText: string = 'Lorem';
 
         await angularHomepage.addNewTodo(oldText);
         await angularHomepage.editTodo(oldText, replacementText[i], 'enter');
@@ -55,7 +55,7 @@ for (const i in descriptionOfReplacementText) {
 
 test('Enable editing inputs', async ({ page }) => {
     const angularHomepage = new AngularHomepage(page);
-    const oldText: string = 'Example';
+    const oldText: string = 'Lorem';
 
     await angularHomepage.addNewTodo(oldText);
     await angularHomepage.enterEditMode(oldText);
@@ -80,7 +80,7 @@ for (const position of whitespacePosition) {
     for (const i in whitespaceType) {
         test(`Remove ${position} ${whitespaceType[i]} on save`, async ({ page }) => {
             let newTextWithWhitespace: string;
-            const oldText: string = 'Example';
+            const oldText: string = 'Lorem';
             const newText: string = 'Ipsum';
 
             const angularHomepage = new AngularHomepage(page);
