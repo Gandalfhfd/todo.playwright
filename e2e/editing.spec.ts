@@ -19,7 +19,7 @@ for (const i in changeSavingMethod) {
         await angularHomepage.editTodo(oldText, newText, method[i]);
 
         // Verify that the todo's text is what we expect.
-        await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({ timeout: 3000, visible: true });
+        await expect(await angularHomepage.locateTodoBySubstring(newText)).toBeVisible({visible: true });
 
         // Verify that the editing class has been removed.
         expect(await angularHomepage.checkPresenceOfClass('editing')).toBe(false);
@@ -34,7 +34,7 @@ for (const description of ['no', 'some']) {
         await angularHomepage.addNewTodo(todoName[0]);
         await angularHomepage.editTodo(todoName[0], (description === 'no' ? todoName[0] : todoName[1]), 'escape');
 
-        await expect(await angularHomepage.locateTodoBySubstring(todoName[0])).toBeVisible({ timeout: 3000, visible: true });
+        await expect(await angularHomepage.locateTodoBySubstring(todoName[0])).toBeVisible({visible: true });
     });
 }
 
@@ -61,8 +61,8 @@ test('Enable editing inputs', async ({ page }) => {
     await angularHomepage.enterEditMode(oldText);
 
     // Check certain elements have been hidden.
-    expect(await angularHomepage.returnCompletedCheckboxLocator()).toBeVisible({ timeout: 3000, visible: false });
-    expect(await angularHomepage.returnDeleteButtonLocator()).toBeVisible({ timeout: 3000, visible: false });
+    expect(await angularHomepage.returnCompletedCheckboxLocator()).toBeVisible({visible: false });
+    expect(await angularHomepage.returnDeleteButtonLocator()).toBeVisible({visible: false });
 
     // Get the input box locator.
     const inputBox = await angularHomepage.getInputBox(oldText);

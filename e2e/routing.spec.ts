@@ -57,7 +57,7 @@ for (const filter of filterArray) {
             await angularHomepage.markAsCompletedByText('Example1');
             await angularHomepage.filterByButton(filter);
             await angularHomepage.toggleCompletedByText('Example1');
-            await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({ timeout: 3000, visible: filter === 'completed' ? false : true });
+            await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({visible: filter === 'completed' ? false : true });
             if (filter === 'all') expect(await angularHomepage.checkTodosCompletedByText('Example1')).toBe(false);
         });
     }
@@ -70,6 +70,6 @@ test('Check active filter persists on reload', async ({ page }) => {
     await angularHomepage.filterByButton('active');
     await page.reload();
     expect(await angularHomepage.checkFilterSelected('active')).toBe(true);
-    await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({ timeout: 3000, visible: true });
-    await expect(await angularHomepage.locateTodoBySubstring('Example2')).toBeVisible({ timeout: 3000, visible: false });
+    await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({visible: true });
+    await expect(await angularHomepage.locateTodoBySubstring('Example2')).toBeVisible({visible: false });
 });
