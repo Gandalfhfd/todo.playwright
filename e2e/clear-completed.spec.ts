@@ -15,9 +15,7 @@ test('Clear one todo', async ({ page }) => {
 
 test('Clear multiple todos', async ({ page }) => {
     const angularHomepage: AngularHomepage = new AngularHomepage(page);
-    await angularHomepage.addNewTodo('Example1');
-    await angularHomepage.addNewTodo('Example2');
-    await angularHomepage.addNewTodo('Example3');
+    await angularHomepage.addMultipleTodos(3, 'Example');
     await angularHomepage.markAsCompletedByText(['Example2', 'Example3']);
     await angularHomepage.clearCompleted();
     await expect(await angularHomepage.locateTodoBySubstring('Example1')).toBeVisible({ timeout: 3000, visible: true });
