@@ -16,7 +16,7 @@ export class AngularHomepage {
     private readonly activeFilter: Locator;
     private readonly completedFilter: Locator;
     private readonly toggleAll: Locator;
-    private readonly listItem: Locator;
+    private readonly lastTodo: Locator;
     private readonly activeEntryBox: Locator;
 
     constructor(page: Page) {
@@ -28,7 +28,7 @@ export class AngularHomepage {
         this.activeFilter = page.getByRole('link', { name: 'Active' });
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
-        this.listItem = page.locator('body > section > section > ul > li > div > label');
+        this.lastTodo = page.getByRole('listitem').locator('label').last();
         this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
     }
 
@@ -62,8 +62,6 @@ export class AngularHomepage {
             case 'escape':
                 await this.page.keyboard.press('Escape');
                 break;
-            default:
-                throw new Error("Incorrect saveMethod passed to EditTodo. saveMethod must be blur, enter or escape.");
         }
     }
 
@@ -138,8 +136,6 @@ export class AngularHomepage {
                 return (await this.activeFilter.getAttribute('class') === 'selected');
             case 'completed':
                 return (await this.completedFilter.getAttribute('class') === 'selected');
-            default:
-                throw new Error("Invalid filter passed to checkFilterSelected. Filter must be all, active or completed.");
         }
     }
 
@@ -161,7 +157,7 @@ export class AngularHomepage {
     async checkTodoPresentByTextAndIsTrimmed(text: string): Promise<boolean> {
         const myHelpers = new MyHelpers();
         try {
-            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText();
             return myHelpers.checkStringHasBeenTrimmed(todoText);
         } catch (error) {
             return false;
@@ -189,7 +185,7 @@ export class AngularHomepage {
      */
     async checkAnyTodosPresent(): Promise<boolean> {
         try {
-            let _ = await this.page.locator('.view').isEnabled({ timeout: 3000 });
+            let _ = await this.page.locator('.view').isEnabled();
             return true;
         } catch (error) {
             return false;
@@ -253,9 +249,6 @@ export class AngularHomepage {
             case 'completed':
                 await this.completedFilter.click();
                 break;
-            default:
-                //const _exhaustiveCheck: never = filter;
-                throw new Error("Invalid filter passed to filterByButton. Filter must be all, active or completed.");
         }
     }
 
@@ -266,7 +259,7 @@ export class AngularHomepage {
      */
     async checkPresenceOfClass(className: string): Promise<boolean> {
         try {
-            let _ = await this.page.locator("." + className).click({ timeout: 3000 });
+            let _ = await this.page.locator("." + className).click();
             return true;
         } catch (error) {
             return false;
@@ -337,7 +330,7 @@ export class AngularHomepage {
      * @returns true if the last item added to the list matches example 
      */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        const todoText = await this.listItem.last().textContent();
+        const todoText = await this.lastTodo.textContent();
         return (todoText === example);
     }
 
@@ -361,7 +354,7 @@ export class AngularHomepage {
      * @returns locator of the last item from todo list
      */
     async getLastItemFromList(): Promise<Locator> {
-        return this.listItem.last();
+        return this.lastTodo;
     }
 
     /**
