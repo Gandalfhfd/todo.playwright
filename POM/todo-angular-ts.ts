@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { MyHelpers } from '../utils/helpers';
 
 // Is the format of the browser's localStorage.
-interface LocalStorage {
+export interface LocalStorage {
     readonly name: string;
     readonly value: string;
 }
@@ -30,7 +30,6 @@ export class AngularHomepage {
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
         this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
-
     }
 
     /**
