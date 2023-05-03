@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { MyHelpers } from '../utils/helpers';
 
 // Is the format of the browser's localStorage.
-interface LocalStorage {
+export interface LocalStorage {
     readonly name: string;
     readonly value: string;
 }
