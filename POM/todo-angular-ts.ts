@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { MyHelpers } from '../utils/helpers';
 
 // Is the format of the browser's localStorage.
-interface LocalStorage {
+export interface LocalStorage {
     readonly name: string;
     readonly value: string;
 }
@@ -30,7 +30,6 @@ export class AngularHomepage {
         this.toggleAll = page.getByText('Mark all as complete');
         this.listItem = page.locator('body > section > section > ul > li > div > label');
         this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
-
     }
 
     /**
@@ -161,7 +160,7 @@ export class AngularHomepage {
     async checkTodoPresentByTextAndIsTrimmed(text: string): Promise<boolean> {
         const myHelpers = new MyHelpers();
         try {
-            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText({ timeout: 3000 });
+            let todoText: string = await this.page.getByRole('listitem').filter({ hasText: text }).innerText();
             return myHelpers.checkStringHasBeenTrimmed(todoText);
         } catch (error) {
             return false;
@@ -189,7 +188,7 @@ export class AngularHomepage {
      */
     async checkAnyTodosPresent(): Promise<boolean> {
         try {
-            let _ = await this.page.locator('.view').isEnabled({ timeout: 3000 });
+            let _ = await this.page.locator('.view').isEnabled();
             return true;
         } catch (error) {
             return false;
@@ -266,7 +265,7 @@ export class AngularHomepage {
      */
     async checkPresenceOfClass(className: string): Promise<boolean> {
         try {
-            let _ = await this.page.locator("." + className).click({ timeout: 3000 });
+            let _ = await this.page.locator("." + className).click();
             return true;
         } catch (error) {
             return false;
