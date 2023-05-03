@@ -16,7 +16,7 @@ export class AngularHomepage {
     private readonly activeFilter: Locator;
     private readonly completedFilter: Locator;
     private readonly toggleAll: Locator;
-    private readonly listItem: Locator;
+    private readonly lastTodo: Locator;
     private readonly activeEntryBox: Locator;
 
     constructor(page: Page) {
@@ -28,7 +28,7 @@ export class AngularHomepage {
         this.activeFilter = page.getByRole('link', { name: 'Active' });
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
-        this.listItem = page.locator('body > section > section > ul > li > div > label');
+        this.lastTodo = page.getByRole('listitem').locator('label').last();
         this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
     }
 
@@ -336,7 +336,7 @@ export class AngularHomepage {
      * @returns true if the last item added to the list matches example 
      */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        const todoText = await this.listItem.last().textContent();
+        const todoText = await this.lastTodo.textContent();
         return (todoText === example);
     }
 
@@ -360,7 +360,7 @@ export class AngularHomepage {
      * @returns locator of the last item from todo list
      */
     async getLastItemFromList(): Promise<Locator> {
-        return this.listItem.last();
+        return this.lastTodo;
     }
 
     /**
