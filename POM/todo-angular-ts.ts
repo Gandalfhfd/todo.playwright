@@ -274,7 +274,7 @@ export class AngularHomepage {
     async checkTodoBeingEditedByText(text: string): Promise<boolean> {
         let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
         if (state.includes('editing')) {
-            return true
+            return true;
         } else {
             return false;
         }
