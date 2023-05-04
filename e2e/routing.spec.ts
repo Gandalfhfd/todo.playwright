@@ -14,8 +14,8 @@ for (const filter of filterArray) {
         await angularHomepage.markAsCompletedByText('Lorem2');
         await page.goto('https://todomvc.com/examples/typescript-angular/#/' + (filter === 'all' ? '' : filter));
         expect(await angularHomepage.checkFilterSelected(filter)).toBe(true);
-        await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: filter === 'completed' ? false : true });
-        await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ timeout: 3000, visible: filter === 'active' ? false : true });
+        await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: filter === 'completed' ? false : true });
+        await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ visible: filter === 'active' ? false : true });
     });
 
     test(`Changing route to #!/${filter === 'all' ? '' : filter} in URL`, async ({ page }) => {
@@ -24,8 +24,8 @@ for (const filter of filterArray) {
         await angularHomepage.markAsCompletedByText('Lorem2');
         await page.goto('https://todomvc.com/examples/typescript-angular/#!/' + (filter === 'all' ? '' : filter));
         expect(await angularHomepage.checkFilterSelected(filter)).toBe(true);
-        await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: filter === 'completed' ? false : true });
-        await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ timeout: 3000, visible: filter === 'active' ? false : true });
+        await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: filter === 'completed' ? false : true });
+        await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ visible: filter === 'active' ? false : true });
     });
 
     test(`Changing route to ${filter} with button`, async ({ page }) => {
@@ -34,8 +34,8 @@ for (const filter of filterArray) {
         await angularHomepage.markAsCompletedByText('Lorem2');
         await angularHomepage.filterByButton(filter);
         expect(await angularHomepage.checkFilterSelected(filter)).toBe(true);
-        await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: filter === 'completed' ? false : true });
-        await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ timeout: 3000, visible: filter === 'active' ? false : true });
+        await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: filter === 'completed' ? false : true });
+        await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ visible: filter === 'active' ? false : true });
     });
 
     if (filter !== 'completed') {
@@ -45,7 +45,7 @@ for (const filter of filterArray) {
             await angularHomepage.filterByButton(filter);
             // Has to be toggle here for the 'active' case.
             await angularHomepage.toggleCompletedByText('Lorem1');
-            await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: filter === 'active' ? false : true });
+            await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: filter === 'active' ? false : true });
             if (filter === 'all') expect(await angularHomepage.checkTodosCompletedByText('Lorem1')).toBe(true);
         });
     }
@@ -57,7 +57,7 @@ for (const filter of filterArray) {
             await angularHomepage.markAsCompletedByText('Lorem1');
             await angularHomepage.filterByButton(filter);
             await angularHomepage.toggleCompletedByText('Lorem1');
-            await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: filter === 'completed' ? false : true });
+            await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: filter === 'completed' ? false : true });
             if (filter === 'all') expect(await angularHomepage.checkTodosCompletedByText('Lorem1')).toBe(false);
         });
     }
@@ -70,6 +70,6 @@ test('Check active filter persists on reload', async ({ page }) => {
     await angularHomepage.filterByButton('active');
     await page.reload();
     expect(await angularHomepage.checkFilterSelected('active')).toBe(true);
-    await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: true });
-    await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ timeout: 3000, visible: false });
+    await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: true });
+    await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ visible: false });
 });

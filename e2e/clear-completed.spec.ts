@@ -18,7 +18,7 @@ test('Clear multiple todos', async ({ page }) => {
     await angularHomepage.addMultipleTodos(3, 'Lorem');
     await angularHomepage.markAsCompletedByText(['Lorem2', 'Lorem3']);
     await angularHomepage.clearCompleted();
-    await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ timeout: 3000, visible: true });
-    await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ timeout: 3000, visible: false });
-    await expect(await angularHomepage.locateTodoBySubstring('Lorem3')).toBeVisible({ timeout: 3000, visible: false });
+    await expect(await angularHomepage.locateTodoBySubstring('Lorem1')).toBeVisible({ visible: true });
+    await expect(await angularHomepage.locateTodoBySubstring('Lorem2')).toBeVisible({ visible: false });
+    await expect(await angularHomepage.locateTodoBySubstring('Lorem3')).toBeVisible({ visible: false });
 });
