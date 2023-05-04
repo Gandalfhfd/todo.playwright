@@ -7,7 +7,7 @@ export class MyHelpers {
      * @returns Array(baseText+1, baseText+2, ..., baseText+numberOfElements)
      * @remarks uses type coalescing to allow us to add string and number
      */
-    async createArrayOfStrings(numberOfElements: number, baseText: string, enumerateStrings: boolean): Promise<string[]> {
+    async createArrayOfStrings(numberOfElements: number, baseText: string, enumerateStrings: boolean = true): Promise<string[]> {
         let returnArray = new Array<string>(numberOfElements);
             if (enumerateStrings === true){
                 for (let i = 1; i <= numberOfElements; i++)
