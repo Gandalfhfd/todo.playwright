@@ -16,7 +16,7 @@ export class AngularHomepage {
     private readonly activeFilter: Locator;
     private readonly completedFilter: Locator;
     private readonly toggleAll: Locator;
-    private readonly listItem: Locator;
+    private readonly lastTodo: Locator;
     private readonly activeEntryBox: Locator;
 
     constructor(page: Page) {
@@ -28,7 +28,7 @@ export class AngularHomepage {
         this.activeFilter = page.getByRole('link', { name: 'Active' });
         this.completedFilter = page.getByRole('link', { name: 'Completed' });
         this.toggleAll = page.getByText('Mark all as complete');
-        this.listItem = page.locator('body > section > section > ul > li > div > label');
+        this.lastTodo = page.getByRole('listitem').locator('label').last();
         this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
     }
 
@@ -62,8 +62,6 @@ export class AngularHomepage {
             case 'escape':
                 await this.page.keyboard.press('Escape');
                 break;
-            default:
-                throw new Error("Incorrect saveMethod passed to EditTodo. saveMethod must be blur, enter or escape.");
         }
     }
 
@@ -79,10 +77,11 @@ export class AngularHomepage {
      * Add a specified number of todos with names of the format baseText followed by a sequence number between 1 and count.
      * @param count The number of todos to create.
      * @param baseText The text each todo should contain before its sequence number.
+     * @param enumerateTodos flag that dictates whether strings should be enumerated; false disables enumeration; set to true by default (strings will be enumerated) 
      */
-    async addMultipleTodos(count: number, baseText: string): Promise<void> {
+    async addMultipleTodos(count: number, baseText: string, enumerateTodos: boolean = true): Promise<void> {
         const myHelpers = new MyHelpers();
-        const todoNames = await myHelpers.createArrayOfEnumeratedStrings(count, baseText);
+        const todoNames = await myHelpers.createArrayOfStrings(count, baseText, enumerateTodos);
         for (let i = 0; i < count; i++) {
             await this.entrybox.type(todoNames[i]);
             await this.entrybox.press('Enter');
@@ -137,8 +136,6 @@ export class AngularHomepage {
                 return (await this.activeFilter.getAttribute('class') === 'selected');
             case 'completed':
                 return (await this.completedFilter.getAttribute('class') === 'selected');
-            default:
-                throw new Error("Invalid filter passed to checkFilterSelected. Filter must be all, active or completed.");
         }
     }
 
@@ -252,9 +249,6 @@ export class AngularHomepage {
             case 'completed':
                 await this.completedFilter.click();
                 break;
-            default:
-                //const _exhaustiveCheck: never = filter;
-                throw new Error("Invalid filter passed to filterByButton. Filter must be all, active or completed.");
         }
     }
 
@@ -280,7 +274,7 @@ export class AngularHomepage {
     async checkTodoBeingEditedByText(text: string): Promise<boolean> {
         let state: string = await this.page.getByRole('listitem').filter({ hasText: text }).getAttribute('class') ?? 'Not Found';
         if (state.includes('editing')) {
-            return true
+            return true;
         } else {
             return false;
         }
@@ -336,7 +330,7 @@ export class AngularHomepage {
      * @returns true if the last item added to the list matches example 
      */
     async checkTodoAppendedToList(example: string): Promise<boolean> {
-        const todoText = await this.listItem.last().textContent();
+        const todoText = await this.lastTodo.textContent();
         return (todoText === example);
     }
 
@@ -360,7 +354,7 @@ export class AngularHomepage {
      * @returns locator of the last item from todo list
      */
     async getLastItemFromList(): Promise<Locator> {
-        return this.listItem.last();
+        return this.lastTodo;
     }
 
     /**

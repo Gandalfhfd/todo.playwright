@@ -11,10 +11,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.32.3"
+    "@playwright/test": "^1.33.0"
   },
   "dependencies": {
-    "@alex_neo/playwright-azure-reporter": "^1.5.7",
     "playwright": "^1.32.3"
   }
 }
