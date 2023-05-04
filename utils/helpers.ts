@@ -1,5 +1,4 @@
 export class MyHelpers {
-
     /**
      * Create an array of strings from some baseText, appended with its index + 1
      * @param numberOfElements the number of elements in the string array
