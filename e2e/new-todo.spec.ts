@@ -5,13 +5,13 @@ test.beforeEach(async ({ page }) => {
     await page.goto('https://todomvc.com/examples/typescript-angular/#/');
 });
 
-let example: string = 'example';   
+let example: string = 'Lorem';   
 
 // Tests if the input element is in focus using the autofocus method
 test('Check element in focus', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     await expect(await toDo.getEntryBox()).toHaveAttribute('autofocus', '');
-    await toDo.typeInInputBox('example');
+    await toDo.typeInInputBox('Lorem');
 });
 
 const inputStrings: string[] = ['test','\x20test','test\x20','\x20test\x20', 'test\x20\x09'];     // \x09 is a tab, \x20 is a space
