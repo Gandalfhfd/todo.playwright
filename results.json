@@ -1,0 +1,374 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\TomaszTlalka\\OneDrive - nFocus Limited\\Desktop\\TODO Intake 4\\todo.playwright\\playwright.config.ts",
+    "rootDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "./results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/TomaszTlalka/OneDrive - nFocus Limited/Desktop/TODO Intake 4/todo.playwright/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.33.0",
+    "workers": 8,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "newTodo.spec.ts",
+      "file": "newTodo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Creation of a todo when 1 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "status": "passed",
+                  "duration": 1549,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.483Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-791124b8168d2c058f4d",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 2 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "status": "passed",
+                  "duration": 1515,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.491Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-d2cf3eaf6a3ee471e305",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 5 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "status": "passed",
+                  "duration": 1847,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.493Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-71c6fa411d59700540e8",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 1 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "status": "passed",
+                  "duration": 3348,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.493Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-f776d5a890e0d08cc954",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 2 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "status": "passed",
+                  "duration": 3842,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.475Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-7ca9e5fd1b066d171553",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 5 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "status": "passed",
+                  "duration": 3918,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.474Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-d8bb617b8250c098b298",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 1 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "status": "passed",
+                  "duration": 3186,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.506Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-e69d4a0e81c2d120b4db",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 2 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "status": "passed",
+                  "duration": 3560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:47.562Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-faddaac9fd94d561be32",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "title": "Creation of a todo when 5 todo(s) exist(s)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "status": "passed",
+                  "duration": 2171,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2023-05-02T12:10:52.068Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "44584e5099fda0d74dc2-5ac7ef433b59a74ea660",
+          "file": "newTodo.spec.ts",
+          "line": 30,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

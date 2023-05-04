@@ -77,11 +77,11 @@ export class AngularHomepage {
      * Add a specified number of todos with names of the format baseText followed by a sequence number between 1 and count.
      * @param count The number of todos to create.
      * @param baseText The text each todo should contain before its sequence number.
-     * @param enumerateTodos optional flag to disable todo string enumeration
+     * @param enumerateTodos flag that dictates whether strings should be enumerated; false disables enumeration; set to true by default (strings will be enumerated) 
      */
-    async addMultipleTodos(count: number, baseText: string, enumerateTodos?: boolean): Promise<void> {
+    async addMultipleTodos(count: number, baseText: string, enumerateTodos: boolean = true): Promise<void> {
         const myHelpers = new MyHelpers();
-        const todoNames = await myHelpers.createArrayOfEnumeratedStrings(count, baseText, enumerateTodos);
+        const todoNames = await myHelpers.createArrayOfStrings(count, baseText, enumerateTodos);
         for (let i = 0; i < count; i++) {
             await this.entrybox.type(todoNames[i]);
             await this.entrybox.press('Enter');

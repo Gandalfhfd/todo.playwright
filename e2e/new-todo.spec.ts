@@ -29,7 +29,7 @@ const numberOfTodos: number[] = [1,2,5];
 for (const numb of numberOfTodos){
     test(`Creation of a todo when ${numb} todo(s) exist(s)`, async ({ page }) => {
         const toDo = new AngularHomepage(page);    
-        await toDo.addMultipleTodos(numb, 'test', false);
+        await toDo.addMultipleTodos(numb, 'test');
         await toDo.addNewTodo(example);
         expect(await toDo.checkTodoAppendedToList(example)).toBe(true);
         expect(await toDo.checkInputBoxEmpty()).toBe(true);
