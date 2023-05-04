@@ -83,8 +83,8 @@ export class AngularHomepage {
         const myHelpers = new MyHelpers();
         const todoNames = await myHelpers.createArrayOfEnumeratedStrings(count, baseText, enumerateTodos);
         for (let i = 0; i < count; i++) {
-                await this.entrybox.type(todoNames[i]);
-                await this.entrybox.press('Enter');            
+            await this.entrybox.type(todoNames[i]);
+            await this.entrybox.press('Enter');
         }
     }
 
