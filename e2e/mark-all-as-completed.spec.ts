@@ -11,7 +11,7 @@ for (const num of numberOfTodosBeingMarkedAsComplete) {
     test(`Mark all ${num} todos as complete`, async ({ page }) => {
         const angularHomepage: AngularHomepage = new AngularHomepage(page);
         const myHelpers = new MyHelpers();
-        const todos: string[] = await myHelpers.createArrayOfEnumeratedStrings(num, 'Lorem');
+        const todos: string[] = await myHelpers.createArrayOfStrings(num, 'Lorem', true);
         await angularHomepage.addMultipleTodos(num, 'Lorem');
         await angularHomepage.markAsCompletedByText('Lorem1');
         await angularHomepage.clickToggleAll();
@@ -25,7 +25,7 @@ for (const num of numberOfTodosBeingToggled) {
     test(`Toggle state of ${num} uncompleted todos`, async ({ page }) => {
         const angularHomepage: AngularHomepage = new AngularHomepage(page);
         const myHelpers = new MyHelpers();
-        const todos: string[] = await myHelpers.createArrayOfEnumeratedStrings(num, 'Lorem');
+        const todos: string[] = await myHelpers.createArrayOfStrings(num, 'Lorem', true);
         await angularHomepage.addMultipleTodos(num, 'Lorem'); // All are marked as active.
         await angularHomepage.clickToggleAll(); // All are marked as complete.
         expect(await angularHomepage.checkTodosCompletedByText(todos)).toBe(true);
@@ -34,7 +34,7 @@ for (const num of numberOfTodosBeingToggled) {
     test(`Toggle state of ${num} completed todos`, async ({ page }) => {
         const angularHomepage: AngularHomepage = new AngularHomepage(page);
         const myHelpers = new MyHelpers();
-        const todos: string[] = await myHelpers.createArrayOfEnumeratedStrings(num, 'Lorem');
+        const todos: string[] = await myHelpers.createArrayOfStrings(num, 'Lorem', true);
         await angularHomepage.addMultipleTodos(num, 'Lorem'); // All are marked as active.
         await angularHomepage.markAsCompletedByText(todos); // All are marked as complete.
         await angularHomepage.clickToggleAll(); // All are marked as active.
