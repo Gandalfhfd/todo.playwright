@@ -25,5 +25,5 @@ test('Enable editing mode', async ({ page }) => {
 test('Remove button shows on hover', async ({ page }) => {
     const toDo = new AngularHomepage(page);
     await toDo.hoverOverTodoByText(exampleText);
-    await expect(page.getByRole('button', { name: '×' })).toBeVisible();
+    expect(await toDo.checkRemoveButtonVisible()).toBe(true);
 });

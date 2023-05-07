@@ -18,6 +18,7 @@ export class AngularHomepage {
     private readonly toggleAll: Locator;
     private readonly lastTodo: Locator;
     private readonly activeEntryBox: Locator;
+    private readonly removeButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -30,6 +31,7 @@ export class AngularHomepage {
         this.toggleAll = page.getByText('Mark all as complete');
         this.lastTodo = page.getByRole('listitem').locator('label').last();
         this.activeEntryBox = page.getByRole('listitem').getByRole('textbox');
+        this.removeButton = page.getByRole('button', { name: '×' });
     }
 
     /**
@@ -391,5 +393,13 @@ export class AngularHomepage {
     */
     async fillActiveEntryBox(example: string): Promise<void> {
         this.activeEntryBox.fill(example);
+    }
+
+    /**
+     * Checks if todo remove button is visible on page
+     * @returns true if button is visible, false if button not visible
+     */
+    async checkRemoveButtonVisible(): Promise<Boolean>{
+        return await this.removeButton.isVisible();
     }
 }
