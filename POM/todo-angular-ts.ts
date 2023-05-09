@@ -399,7 +399,7 @@ export class AngularHomepage {
      * Checks if todo remove button is visible on page
      * @returns true if button is visible, false if button not visible
      */
-    async checkRemoveButtonVisible(): Promise<Boolean>{
+    async checkRemoveButtonVisible(): Promise<Boolean> {
         return await this.removeButton.isVisible();
     }
 }
